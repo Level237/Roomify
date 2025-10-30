@@ -51,6 +51,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accounts.middleware.admin_middleware.AdminMiddleware',
+    'accounts.middleware.manager_middleware.ManagerMiddleware',
+    'accounts.middleware.customer_middleware.CustomerMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [

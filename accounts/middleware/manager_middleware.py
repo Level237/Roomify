@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 
-class RoleRequiredMiddleware:
+class ManagerMiddleware:
     
     def __init__(self,get_response) -> None:
         self.get_response = get_response
@@ -16,4 +16,5 @@ class RoleRequiredMiddleware:
         if user.role and user.role.name != "manager":
             previous_url = request.META.get('HTTP_REFERER', '/')
             return redirect(previous_url)
+        return self.get_response(request)
         
