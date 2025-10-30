@@ -1,7 +1,7 @@
 from  django import forms
-from django.contrib.auth.models import User
+from    .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import authenticate,get_user_model
 
 class CustomRegisterForm(forms.ModelForm):
     
@@ -9,7 +9,7 @@ class CustomRegisterForm(forms.ModelForm):
     confirm_password= forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder':'Enter your confirm password'}))
     
     class Meta:
-        model= User
+        model= CustomUser
         fields= ['username',"email","password"]
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a username'}),
@@ -26,7 +26,7 @@ class CustomRegisterForm(forms.ModelForm):
         return cleaned_data
     
 
-class CustomLoginForm(AuthenticationForm):
+class CustomLoginForm(forms.Form):
     
     email=forms.EmailField(
         label="Email address",
@@ -44,20 +44,38 @@ class CustomLoginForm(AuthenticationForm):
         })
     )
     
-    def clean(self):
-        email=self.cleaned_data.get("email")
-        password=self.cleaned_data.get("password")
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+        self.user_cache=None
         
+
+    def clean(self):
+        cleaned = super().clean()
+        email = cleaned.get('email')
+        password = cleaned.get('password')
+        print(email)
         if email and password:
-            try:
-                user = User.objects.get(email=email)
-            except User.DoesNotExist:
-                raise forms.ValidationError("User does not exist")
-            
-            user= authenticate(username=user.email,password=password)
+            # Option A: si tu as un backend personnalisé qui accepte email kwarg:
+            user = authenticate(self.request, email=email, password=password)
+            print("level")
+            # Option B: si tu n'as PAS de backend email, mais user.email unique :
+            # try:
+            #     u = User.objects.get(email=email)
+            # except User.DoesNotExist:
+            #     raise forms.ValidationError("Aucun compte ne correspond à cet email.")
+            # user = authenticate(self.request, username=u.username, password=password)
+
             if user is None:
-                raise forms.ValidationError("Invalid password")
+                raise forms.ValidationError("Identifiants invalides.")
+            if not user.is_active:
+                raise forms.ValidationError("Ce compte est inactif.")
             self.user_cache = user
-        return self.cleaned_data
+
+        return cleaned
+
+    def get_user(self):
+        return self.user_cache
+
     
     

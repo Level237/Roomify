@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Application definition
 
@@ -49,6 +50,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backend.EmailBackend',   # ton backend personnalisé
+    'django.contrib.auth.backends.ModelBackend',  # garde celui-ci pour compatibilité admin
 ]
 
 ROOT_URLCONF = 'roomify.urls'
