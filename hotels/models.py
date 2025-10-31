@@ -6,7 +6,7 @@ from django.conf import settings
 class Hotel(models.Model):
     manager=models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
-                              limit_choices_to={'role': 'manager'},
+                              limit_choices_to={'role__name': 'manager'},
                               related_name="hotels"
                               )
     name= models.CharField(max_length=50)

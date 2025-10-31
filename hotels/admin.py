@@ -3,7 +3,9 @@ from .models import Hotel
 
 # Register your models here.
 
-@admin.register(Hotel)
+
 
 class HotelAdmin(admin.ModelAdmin):
     list_display=('name','manager','city','country','hotel_profile')
+
+admin.site.register(Hotel,HotelAdmin)
