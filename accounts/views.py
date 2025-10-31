@@ -19,6 +19,7 @@ def login_user(request):
     form = CustomLoginForm(request.POST or None, request=request)
     if request.method == 'POST' and form.is_valid():
         user = form.get_user()
+        print(form.errors)
         if user:
             login(request, user,backend='accounts.backend.EmailBackend')
             role_name=user.role.name.lower() if user.role else None
