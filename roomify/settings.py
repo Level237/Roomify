@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'roles',
     'customerpanel',
     'accounts.apps.AccountsConfig',
+    'hotels.apps.HotelsConfig'
 ]
 
 MIDDLEWARE = [
