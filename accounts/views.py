@@ -21,7 +21,11 @@ def login_user(request):
         user = form.get_user()
         if user:
             login(request, user,backend='accounts.backend.EmailBackend')
-            return redirect('core:home')
+            role_name=user.role.name.lower() if user.role else None
+            print(role_name)
+            if role_name == "user":
+                return redirect('customerpanel:customer_dashboard')
+            
     
     return render(request, 'accounts/login.html', {'form': form})
 

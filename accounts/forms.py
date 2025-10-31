@@ -1,4 +1,5 @@
 from  django import forms
+from roles.models import Role 
 from    .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,get_user_model
@@ -25,6 +26,21 @@ class CustomRegisterForm(forms.ModelForm):
             self.add_error("confirm_password", " Password doesn't not match")
         return cleaned_data
     
+    def save(self,commit=True):
+        user=super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        
+        try:
+            default_role=Role.objects.get(name="user")
+            print(default_role)
+        except Role.DoesNotExist:
+            default_role=None
+        if default_role:
+            user.role=default_role
+            
+        if commit:
+            user.save()
+        return user
 
 class CustomLoginForm(forms.Form):
     
