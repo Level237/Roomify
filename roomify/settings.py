@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'roles',
+    'rooms.apps.RoomsConfig',
     'customerpanel',
     'accounts.apps.AccountsConfig',
     'hotels.apps.HotelsConfig'
+    
 ]
 
 MIDDLEWARE = [
