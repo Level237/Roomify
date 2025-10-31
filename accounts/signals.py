@@ -9,6 +9,6 @@ user = get_user_model()
 
 def assign_admin_role(sender,instance,created,**kwargs):
     if created and instance.is_superuser:
-        role,_ = Role.objects.get_or_create(name="admin")
+        role, _ = Role.objects.get_or_create(name="admin")
         instance.role=role
         instance.save()
