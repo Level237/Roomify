@@ -1,8 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser,BaseUserManager,PermissionsMixin
 from roles.models import Role
+import shortuuid
 # Create your models here.
 
+
+def generate_user_id():
+    return f"user-{shortuuid.uuid()[:8]}"
 class CustomUserManager(BaseUserManager):
     def create_user(self,email,username,password=None,**extra_fields):
         if not email:
@@ -29,6 +33,7 @@ class CustomUserManager(BaseUserManager):
         
     
 class CustomUser(AbstractUser,PermissionsMixin):
+    id=models.CharField(max_length=50,primary_key=True,default=generate_user_id,editable=False)
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(unique=True)
     role = models.ForeignKey(Role, on_delete=models.SET_NULL,null=True,blank=True)

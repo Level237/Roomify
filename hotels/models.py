@@ -10,6 +10,7 @@ class Hotel(models.Model):
     
     id=models.CharField(max_length=15,primary_key=True,default=generate_short_uuid,editable=False)
     manager=models.ForeignKey(settings.AUTH_USER_MODEL,
+                              to_field="id",
                               on_delete=models.CASCADE,
                               limit_choices_to={'role__name': 'manager'},
                               related_name="hotels"
