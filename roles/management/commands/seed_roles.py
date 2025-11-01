@@ -8,7 +8,8 @@ class Command(BaseCommand):
         roles=[
             {"name": "admin"},
             {"name": "user"},
-            {"name":  "manager"}
+            {"name":  "manager"},
+            {"name":"hotelier"}
         ]
         
         for role in roles:

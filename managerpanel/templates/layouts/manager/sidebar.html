@@ -13,21 +13,42 @@
         <div class="offcanvas-body sidebar-content d-flex flex-column">
             <!-- Hotel Selector -->
             <div class="p-3 border-bottom">
-                <div class="dropdown">
+                <div class="dropdown" style="position: relative;">
                     <button class="btn btn-outline-primary w-100 text-start d-flex align-items-center justify-content-between" 
-                            type="button" id="hotelDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            type="button" id="hotelDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="z-index: 1060;">
                         <div class="d-flex align-items-center">
                             <i class="bi bi-building me-2"></i>
-                            <span class="text-truncate" id="currentHotel">Sélectionner un hôtel</span>
+                            <span style="font-size: 13px;" class="text-truncate" id="currentHotel">Sélectionner un hôtel</span>
                         </div>
                         <i class="bi bi-chevron-down ms-2"></i>
                     </button>
-                    <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown">
+                    <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown" style="position: absolute; z-index: 1070;margin-left: -2rem;">
+                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="1">
+                            <i class="bi bi-building me-2"></i> Hôtel des Palmiers
+                           
+                        </a></li>
+                        <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
+                            <i class="bi bi-building me-2"></i> Hôtel du Lac
+                        </a></li>
+                        <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="3">
+                            <i class="bi bi-building me-2"></i> Hôtel Montagne
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                                <i class="bi bi-plus-circle me-2"></i>Ajouter un hôtel
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown" style="position: absolute; z-index: 9070;">
                         <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item d-flex align-items-center" href="#" data-hotel="1">
                             <i class="bi bi-building me-2"></i> Hôtel des Palmiers
-                            <span class="badge bg-primary ms-auto">Actif</span>
+                            
                         </a></li>
                         <li><a class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
                             <i class="bi bi-building me-2"></i> Hôtel du Lac
