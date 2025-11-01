@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 
 def dashboard_manager(request):
-    return render(request,"dashboard.html")
+    return render(request,"manager/dashboard.html")

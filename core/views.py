@@ -34,7 +34,7 @@ def managerRegister(request):
             )
             
             request.session.pop("manager_step_one_registration",None)
-            return redirect(f"{reverse('core:register-manager')}?s=1")
+            return redirect("managerpanel:manager_dashboard")
     elif not step:
         return redirect(f"{reverse('core:register-manager')}?s=1")
     return render(request,"accounts/manager-register.html",{"step":step,"form":form})

@@ -26,8 +26,8 @@ def login_user(request):
             print(role_name)
             if role_name == "user":
                 return redirect('customerpanel:customer_dashboard')
-            
-    
+            if role_name == "manager":
+                return redirect('managerpanel:manager_dashboard')
     return render(request, 'accounts/login.html', {'form': form})
 
 def logout_user(request):

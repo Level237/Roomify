@@ -13,7 +13,7 @@ class Hotel(models.Model):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20,null=True,blank=True)
     description= models.TextField(blank=True,null=True)
     hotel_profile=models.ImageField(upload_to='hotels/profiles/',blank=True,null=True)
     
