@@ -1,8 +1,7 @@
 from  django import forms
 from roles.models import Role 
 from    .models import CustomUser
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate,get_user_model
+from django.contrib.auth import authenticate
 
 class CustomRegisterForm(forms.ModelForm):
     
@@ -93,5 +92,29 @@ class CustomLoginForm(forms.Form):
     def get_user(self):
         return self.user_cache
 
+
+class ManagerRegisterStepOneForm(forms.Form):
+    lastname=forms.CharField(max_length=50, required=True,
+                             widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your last name"}))
+    firstname=forms.CharField(max_length=50, required=True,
+                             widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your first name"}))
+    email = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your email"}))
     
+
+class ManagerRegisterStepTwoForm(forms.Form):
+    username=forms.CharField(max_length=50, required=True,
+                             widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your username"}))
+    password = forms.CharField(required=True,
+                              widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Enter your password"}))
+    confirm_password = forms.CharField(required=True,
+                                       widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Confirm your password"}))
+    def clean(self):
+        cleaned_data=super().clean()
+        password = cleaned_data.get('password')
+        confirm = cleaned_data.get('confirm_password')
+        
+        if password and confirm and password != confirm:
+            self.add_error("confirm_password", " Password doesn't not match")
+        return cleaned_data                         
     
