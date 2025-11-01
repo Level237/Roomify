@@ -384,93 +384,87 @@ Main banner START -->
 					{% csrf_token %}
                     
                     <!-- Informations personnelles -->
-                    <div class="card mb-4">
+					 {% if step == "1" %}
+							<div class="card mb-4">
                         <div class="card-header bg-primary bg-opacity-10">
                             <h5 class="mb-0">Informations personnelles</h5>
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Prénom <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="first_name" required>
-                                        <div class="invalid-feedback">Veuillez entrer votre prénom</div>
+										 <label class="form-label">Firstname <span class="text-danger">*</span></label>
+                                        {{form.firstname}}
+										 {% if form.firstname.errors %}
+                                            <div class="text-danger small">{{ form.firstname.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Nom <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="last_name" required>
-                                        <div class="invalid-feedback">Veuillez entrer votre nom</div>
+                                         <label class="form-label">Lastname <span class="text-danger">*</span></label>
+                                        {{form.lastname}}
+										 {% if form.lastname.errors %}
+                                            <div class="text-danger small">{{ form.lastname.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Email professionnel <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" name="email" required>
-                                        <small class="form-text text-muted">Utilisez votre email professionnel</small>
-                                        <div class="invalid-feedback">Veuillez entrer un email valide</div>
+                                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                                        {{form.email}}
+										 {% if form.email.errors %}
+                                            <div class="text-danger small">{{ form.email.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Téléphone <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                            <input type="tel" class="form-control" name="phone" required>
-                                        </div>
-                                        <div class="invalid-feedback">Veuillez entrer un numéro de téléphone valide</div>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
-
-                    <!-- Informations de connexion -->
-                    <div class="card mb-4">
+					 {% endif %}
+                    
+					{% if step == "2" %}
+							  <div class="card mb-4">
                         <div class="card-header bg-primary bg-opacity-10">
                             <h5 class="mb-0">Informations de connexion</h5>
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Nom d'utilisateur <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" name="username" required>
-                                        </div>
-                                        <small class="form-text text-muted">Entre 4 et 30 caractères</small>
-                                        <div class="invalid-feedback">Ce nom d'utilisateur est requis</div>
+                                        
+                                         <label class="form-label">Username <span class="text-danger">*</span></label>
+                                        {{form.username}}
+										 {% if form.username.errors %}
+                                            <div class="text-danger small">{{ form.username.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Mot de passe <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="password" name="password1" required>
-                                            <button class="btn btn-outline-secondary toggle-password" type="button">
-                                                <i class="far fa-eye"></i>
-                                            </button>
-                                        </div>
-                                        <small class="form-text text-muted">Minimum 8 caractères avec des chiffres et lettres</small>
-                                        <div class="invalid-feedback">Le mot de passe est requis</div>
+                                         <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        {{form.password}}
+										 {% if form.password.errors %}
+                                            <div class="text-danger small">{{ form.password.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                            <input type="password" class="form-control" name="password2" required>
-                                        </div>
-                                        <div class="invalid-feedback">Les mots de passe ne correspondent pas</div>
+                                         <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        {{form.confirm_password}}
+										 {% if form.confirm_password.errors %}
+                                            <div class="text-danger small">{{ form.confirm_password.errors.0 }}</div>
+                                            {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+					{% endif %}
+                    <!-- Informations de connexion -->
+                  
 
                     <!-- Informations sur l'hôtel -->
         
@@ -479,7 +473,14 @@ Main banner START -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="reset" class="btn btn-outline-secondary me-md-2">Réinitialiser</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-user-plus me-2"></i>Créer mon compte
+							{% if step == "1" %}
+							
+								Next
+								<i class="fas fa-arrow-right me-2"></i>
+							{% else %}
+							<i class="fas fa-user-plus me-2"></i>
+								Créer mon compte
+							{% endif %}
                         </button>
                     </div>
                 </form>

@@ -9,16 +9,16 @@ def home(request):
     return render(request,"Homepage.html")
 
 def managerRegister(request):
-    step=int(request.GET.get('s',1))
+    step=request.GET.get('s',"") or None
     
-    if step == 1:
+    if step == "1":
         form=ManagerRegisterStepOneForm(request.POST or None)
         
         if request.method == "POST" and form.is_valid():
             request.session['manager_step_one_registration']=form.cleaned_data
-            return redirect(f"{reverse('core:manager-register')}?s=2")
+            return redirect(f"{reverse('core:register-manager')}?s=2")
         
-    elif step == 2:
+    elif step == "2":
         form=ManagerRegisterStepTwoForm(request.POST or None)
         if request.method == "POST" and form.is_valid():
             step_one=request.session.get("manager_step_one_registration",{})
@@ -34,5 +34,7 @@ def managerRegister(request):
             )
             
             request.session.pop("manager_step_one_registration",None)
-            return redirect(f"{reverse('core:manager-register')}?s=1")
+            return redirect(f"{reverse('core:register-manager')}?s=1")
+    elif not step:
+        return redirect(f"{reverse('core:register-manager')}?s=1")
     return render(request,"accounts/manager-register.html",{"step":step,"form":form})

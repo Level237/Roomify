@@ -1,6 +1,6 @@
 from .forms import CustomRegisterForm,CustomLoginForm
 from django.shortcuts import render,redirect
-from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth import login,logout
 
 def register_user(request):
     if request.method == "POST":

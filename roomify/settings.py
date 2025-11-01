@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'customerpanel',
     'accounts.apps.AccountsConfig',
-    'hotels.apps.HotelsConfig'
+    'hotels.apps.HotelsConfig',
+    'managerpanel'
     
 ]
 
