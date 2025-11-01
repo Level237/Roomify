@@ -4,5 +4,6 @@ from . import views
 app_name="core"
 
 urlpatterns = [
-    path('',views.home,name="home")
+    path('',views.home,name="home"),
+    path('manager/register',views.managerRegister,name="register-manager"),
 ]
