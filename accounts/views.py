@@ -47,6 +47,7 @@ def hotelier_set_password(request,user_id):
             form.save()
             
             return redirect("accounts:login")
+    return render(request,"password-reset.html",{'form':form})
         
 
 def logout_user(request):
