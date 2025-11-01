@@ -5,6 +5,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm
 
 User = get_user_model()
+
+
+
+    
 def register_user(request):
     if request.method == "POST":
         form= CustomRegisterForm(request.POST)

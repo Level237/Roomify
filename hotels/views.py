@@ -11,6 +11,19 @@ from django.core.mail import send_mail
 
 User = get_user_model()
 
+
+def send_mail_from_user(user,hotel,temp_password):
+     send_mail(
+            subject=f"Account Hotelier form {hotel.name}",
+            message=f"Hello {user.username},\n\n"
+                    f"You have been added as a hotel employee\n\n"
+                    f"Your temporary password is: {temp_password}\n\n"
+                    f"Please log in to change your password with this link http://example.com/employee/set-password/{user.id}\n\n"
+                    f"Thank you for using Roomify.\n\n"
+                    f"Roomify Team",
+            from_email="Roomify <roomify@roomify.com>",
+            recipient_list=[user.email],
+        )
 def create_hotel(request,hotel_id):
     hotel=Hotel.objects.get(id=hotel_id)
     
@@ -35,14 +48,6 @@ def create_hotel(request,hotel_id):
             hotel=hotel,
         )
         
-        send_mail(
-            subject=f"Account Hotelier form {hotel.name}",
-            message=f"Hello {data['username']},\n\n"
-                    f"You have been added as a hotel employee\n\n"
-                    f"Your temporary password is: {temp_password}\n\n"
-                    f"Please log in to change your password with this link http://example.com/employee/set-password/{user.id}\n\n"
-                    f"Thank you for using Roomify.\n\n"
-                    f"Roomify Team",
-            from_email="Roomify <roomify@roomify.com>",
-            recipient_list=[user.email],
-        )
+        send_mail_from_user(user,hotel,temp_password)
+        
+       
