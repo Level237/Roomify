@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'customerpanel.middleware.CustomerMiddleware',
     'core.middleware.NotAuthenticatedMiddleware',
+    'managerpanel.middleware.ManagerMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [

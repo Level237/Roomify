@@ -5,5 +5,5 @@ app_name="core"
 
 urlpatterns = [
     path('',views.home,name="home"),
-    path('manager/register',views.managerRegister,name="register-manager"),
+    path('register/manager',views.managerRegister,name="register-manager"),
 ]
