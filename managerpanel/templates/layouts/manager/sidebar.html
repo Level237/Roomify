@@ -1,107 +1,153 @@
 
 {% load static %}
 <nav class="navbar sidebar navbar-expand-xl navbar-light">
-		<!-- Navbar brand for xl START -->
-		<div class="d-flex align-items-center">
-			<a class="navbar-brand" href="index.html-1.htm">
-				<img class="light-mode-item navbar-brand-item" src="{% static 'images/logo-light.png' %}" alt="logo">
-				<img class="dark-mode-item navbar-brand-item" src="{% static 'images/logo.png' %}" alt="logo">
-			</a>
-		</div>
-		<!-- Navbar brand for xl END -->
-		
-		<div class="offcanvas offcanvas-start flex-row custom-scrollbar h-100" data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
-			<div class="offcanvas-body sidebar-content d-flex flex-column pt-4">
-	
-				<!-- Sidebar menu START -->
-				<ul class="navbar-nav flex-column" id="navbar-sidebar">
-					<!-- Menu item -->
-					<li class="nav-item"><a href="admin-dashboard.html.htm" class="nav-link active">Dashboard</a></li>
+    <!-- Navbar brand for xl START -->
+    <div class="d-flex align-items-center px-3 py-2">
+        <a class="navbar-brand" href="#">
+            <img class="light-mode-item navbar-brand-item" src="{% static 'images/logo-light.png' %}" alt="logo" height="40">
+            <span class="ms-2 fw-bold d-none d-xl-inline">Roomify Manager</span>
+        </a>
+    </div>
 
-					<!-- Title -->
-					<li class="nav-item ms-2 my-2">Pages</li>
+    <div class="offcanvas offcanvas-start flex-row custom-scrollbar h-100" data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
+        <div class="offcanvas-body sidebar-content d-flex flex-column">
+            <!-- Hotel Selector -->
+            <div class="p-3 border-bottom">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary w-100 text-start d-flex align-items-center justify-content-between" 
+                            type="button" id="hotelDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-building me-2"></i>
+                            <span class="text-truncate" id="currentHotel">Sélectionner un hôtel</span>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown">
+                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="#" data-hotel="1">
+                            <i class="bi bi-building me-2"></i> Hôtel des Palmiers
+                            <span class="badge bg-primary ms-auto">Actif</span>
+                        </a></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
+                            <i class="bi bi-building me-2"></i> Hôtel du Lac
+                        </a></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="#" data-hotel="3">
+                            <i class="bi bi-building me-2"></i> Hôtel Montagne
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                                <i class="bi bi-plus-circle me-2"></i>Ajouter un hôtel
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-					<!-- Menu item -->
-					<li class="nav-item">
-						<a class="nav-link" data-bs-toggle="collapse" href="#collapsebooking" role="button" aria-expanded="false" aria-controls="collapsebooking">
-						Bookings
-						</a>
-						<!-- Submenu -->
-						<ul class="nav collapse flex-column" id="collapsebooking" data-bs-parent="#navbar-sidebar">
-							<li class="nav-item"> <a class="nav-link" href="admin-booking-list.html.htm">Booking List</a></li>
-							<li class="nav-item"> <a class="nav-link" href="admin-booking-detail.html.htm">Booking Detail</a></li>
-						</ul>
-					</li>
-	
-					<!-- Menu item -->
-					<li class="nav-item">
-						<a class="nav-link" data-bs-toggle="collapse" href="#collapseguest" role="button" aria-expanded="false" aria-controls="collapseguest">
-						Guests
-						</a>
-						<!-- Submenu -->
-						<ul class="nav collapse flex-column" id="collapseguest" data-bs-parent="#navbar-sidebar">
-							<li class="nav-item"> <a class="nav-link" href="admin-guest-list.html">Guest List</a></li>
-							<li class="nav-item"> <a class="nav-link" href="admin-guest-detail.html.htm">Guest Detail</a></li>
-						</ul>
-					</li>
+            <!-- Navigation Menu -->
+            <ul class="navbar-nav flex-column flex-grow-1" id="navbar-sidebar">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+                    </a>
+                </li>
+                
+                <li class="nav-item mt-2">
+                    <div class="nav-link text-uppercase small fw-bold text-muted">Gestion</div>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-calendar-check me-2"></i> Réservations
+                        <span class="badge bg-primary rounded-pill float-end">12</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-people me-2"></i> Clients
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-door-open me-2"></i> Chambres
+                    </a>
+                </li>
+                
+                <li class="nav-item mt-2">
+                    <div class="nav-link text-uppercase small fw-bold text-muted">Analyse</div>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-graph-up me-2"></i> Statistiques
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-currency-dollar me-2"></i> Revenus
+                    </a>
+                </li>
+                
+                <li class="nav-item mt-auto">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-gear me-2"></i> Paramètres
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile & Logout -->
+        <div class="p-3 border-top">
+            <div class="d-flex align-items-center">
+                <img src="{% static 'images/avatar/01.jpg' %}" class="rounded-circle me-2" width="36" height="36" alt="Avatar">
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">{{ user.get_full_name|default:user.username }}</h6>
+                    <small class="text-muted">Manager</small>
+                </div>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-sm btn-link text-danger" data-bs-toggle="tooltip" title="Déconnexion">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
 
-					<!-- Menu item -->
-					<li class="nav-item">
-						<a class="nav-link" data-bs-toggle="collapse" href="#collapseagent" role="button" aria-expanded="false" aria-controls="collapseagent">
-						Agents
-						</a>
-						<!-- Submenu -->
-						<ul class="nav collapse flex-column" id="collapseagent" data-bs-parent="#navbar-sidebar">
-							<li class="nav-item"> <a class="nav-link" href="admin-agent-list.html">Agent List</a></li>
-							<li class="nav-item"> <a class="nav-link" href="admin-agent-detail.html">Agent Detail</a></li>
-						</ul>
-					</li>
-					
-					<!-- Menu item -->
-					<li class="nav-item"> <a class="nav-link" href="admin-reviews.html">Reviews</a></li>
-	
-					<!-- Menu item -->
-					<li class="nav-item"> <a class="nav-link" href="admin-earnings.html">Earnings</a></li>
-	
-					<!-- Menu item -->
-					<li class="nav-item"> <a class="nav-link" href="admin-settings.html.htm">Admin Settings</a></li>
-	
-					<!-- Menu item -->
-					<li class="nav-item">
-						<a class="nav-link" data-bs-toggle="collapse" href="#collapseauthentication" role="button" aria-expanded="false" aria-controls="collapseauthentication">
-							Authentication
-						</a>
-						<!-- Submenu -->
-						<ul class="nav collapse flex-column" id="collapseauthentication" data-bs-parent="#navbar-sidebar">
-							<li class="nav-item"> <a class="nav-link" href="sign-up.html.htm">Sign Up</a></li>
-							<li class="nav-item"> <a class="nav-link" href="sign-in.html.htm">Sign In</a></li>
-							<li class="nav-item"> <a class="nav-link" href="forgot-password.html.htm">Forgot Password</a></li>
-							<li class="nav-item"> <a class="nav-link" href="error.html.htm">Error 404</a></li>
-						</ul>
-					</li>
-	
-					<!-- Title -->
-					<li class="nav-item ms-2 my-2">Documentation</li>
-	
-					<!-- Menu item -->
-					<li class="nav-item"> <a class="nav-link" href="docs/index.html.htm">Documentation</a></li>
-	
-					<!-- Menu item -->
-					<li class="nav-item"> <a class="nav-link" href="docs/changelog.html.htm">Changelog</a></li>
-				</ul>
-				<!-- Sidebar menu end -->
-	
-				<!-- Sidebar footer START -->
-				<div class="d-flex align-items-center justify-content-between text-primary-hover mt-auto p-3">
-					<a class="h6 fw-light mb-0 text-body" href="sign-in.html.htm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Sign out">
-						<i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
-					</a>
-					<a class="h6 mb-0 text-body" href="admin-settings.html.htm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Settings">
-						<i class="bi bi-gear-fill"></i>
-					</a>
-				</div>
-				<!-- Sidebar footer END -->
-				
-			</div>
-		</div>
-	</nav>
+<!-- Add Hotel Modal -->
+<div class="modal fade" id="addHotelModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un nouvel hôtel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addHotelForm">
+                    <div class="mb-3">
+                        <label for="hotelName" class="form-label">Nom de l'hôtel</label>
+                        <input type="text" class="form-control" id="hotelName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hotelLocation" class="form-label">Localisation</label>
+                        <input type="text" class="form-control" id="hotelLocation" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hotelDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="hotelDescription" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hotelLogo" class="form-label">Logo de l'hôtel</label>
+                        <input class="form-control" type="file" id="hotelLogo">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>

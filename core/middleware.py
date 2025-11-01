@@ -7,7 +7,7 @@ class NotAuthenticatedMiddleware:
     
     def __call__(self,request) :
         
-        if request.path.endswith('/login/') or request.path.endswith('/register/'):
+        if request.path.endswith('/login/') or request.path.endswith('/register/') or request.path.startswith('/register/'):
             user=request.user
             
             if user.is_authenticated:
