@@ -1,7 +1,10 @@
 from .forms import CustomRegisterForm,CustomLoginForm
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
 
+User = get_user_model()
 def register_user(request):
     if request.method == "POST":
         form= CustomRegisterForm(request.POST)
@@ -29,6 +32,18 @@ def login_user(request):
             if role_name == "manager":
                 return redirect('managerpanel:manager_dashboard')
     return render(request, 'accounts/login.html', {'form': form})
+
+def hotelier_set_password(request,user_id):
+    user=User.objects.get(id=user_id)
+    
+    if request.method == "POST":
+        form=SetPasswordForm(user,request.POST)
+        
+        if form.is_valid:
+            form.save()
+            
+            return redirect("accounts:login")
+        
 
 def logout_user(request):
     if request.method == "POST":
