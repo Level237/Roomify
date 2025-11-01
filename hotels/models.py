@@ -1,14 +1,20 @@
 from django.db import models
 from django.conf import settings
+import shortuuid
 
 # Create your models here.
 
+def generate_short_uuid():
+    return shortuuid.uuid()[:10]
 class Hotel(models.Model):
+    
+    id=models.CharField(max_length=15,primary_key=True,default=generate_short_uuid,editable=False)
     manager=models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               limit_choices_to={'role__name': 'manager'},
                               related_name="hotels"
                               )
+    
     name= models.CharField(max_length=50)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=150)

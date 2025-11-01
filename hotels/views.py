@@ -1,3 +1,5 @@
+from accounts.utils import account_activation_token
+from core.utils import get_base_url
 from django.shortcuts import render
 from hotels.forms import EmployeeCreationForm
 from hotels.models import Hotelier
@@ -12,13 +14,16 @@ from django.core.mail import send_mail
 User = get_user_model()
 
 
-def send_mail_from_user(user,hotel,temp_password):
-     send_mail(
+def send_mail_from_user(user,hotel,temp_password,token,frontend_url):
+    
+    
+    activation_url=f"{frontend_url}/accounts/set-password/{user.id}/{token}"
+    send_mail(
             subject=f"Account Hotelier form {hotel.name}",
             message=f"Hello {user.username},\n\n"
                     f"You have been added as a hotel employee\n\n"
                     f"Your temporary password is: {temp_password}\n\n"
-                    f"Please log in to change your password with this link http://example.com/employee/set-password/{user.id}\n\n"
+                    f"Please log in to change your password with this link {activation_url}\n\n"
                     f"Thank you for using Roomify.\n\n"
                     f"Roomify Team",
             from_email="Roomify <roomify@roomify.com>",
@@ -40,14 +45,16 @@ def create_hotel(request,hotel_id):
             username=data['username'],
             email = data['email'],
             password=temp_password,
+            is_active=False,
             role_id=Role.objects.get(name="hotelier").id,
         )
         
+        token=account_activation_token.make_token(user)
         Hotelier.objects.create(
             user=user,
             hotel=hotel,
         )
-        
-        send_mail_from_user(user,hotel,temp_password)
+        frontend_url=get_base_url(request)
+        send_mail_from_user(user,hotel,temp_password,token,frontend_url)
         
        

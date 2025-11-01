@@ -34,7 +34,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     role = models.ForeignKey(Role, on_delete=models.SET_NULL,null=True,blank=True)
     firstname = models.CharField(max_length=255,null=True,blank=True)
     lastname = models.CharField(max_length=255,null=True,blank=True)
-    password=models.CharField(max_length=255,null=True,blank=True)
+    password=models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     
