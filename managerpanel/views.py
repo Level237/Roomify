@@ -4,4 +4,10 @@ from django.shortcuts import render
 
 
 def dashboard_manager(request):
-    return render(request,"manager/dashboard.html")
+    show_hotel_form = request.GET.get('r')
+    
+    if show_hotel_form == 'new-hotel':
+        show_hotel_form = True
+    else:
+        show_hotel_form = False
+    return render(request,"manager/dashboard.html",{'show_hotel_form':show_hotel_form})
