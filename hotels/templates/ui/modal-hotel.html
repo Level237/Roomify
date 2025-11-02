@@ -1,0 +1,930 @@
+<!-- Backdrop avec effet de flou -->
+<div class="modal-backdrop-custom fade show"></div>
+
+<!-- Modal personnalisé superposé -->
+<div class="custom-modal-overlay">
+    <div class="custom-modal-container">
+        <div class="custom-modal-content">
+            <!-- En-tête du formulaire avec design moderne -->
+            <div class="custom-modal-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="modal-icon-wrapper">
+                        <i class="bi bi-building-add"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 fw-bold">Créer un nouvel hôtel</h4>
+                        <p class="mb-0 small header-subtitle">Remplissez les informations ci-dessous</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <!-- Toggle Light/Dark Mode -->
+                   
+                    <button type="button" class="btn-close-custom" onclick="window.location.href='{% url 'managerpanel:manager_dashboard' %}'">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Écran de chargement -->
+            <div id="hotelFormLoader" class="d-none">
+                <div class="custom-modal-body text-center py-5">
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                    <p class="mt-3 text-muted">Création de votre hôtel en cours...</p>
+                </div>
+            </div>
+            
+            <!-- Contenu du formulaire -->
+            <div id="hotelFormContent">
+                <form id="addHotelForm" class="needs-validation" novalidate>
+                    <div class="custom-modal-body">
+                      
+
+                        <div class="row g-4">
+                            <!-- Section Informations de base -->
+                            <div class="col-lg-8">
+                                <div class="form-section">
+                                    <div class="section-header">
+                                        <div class="section-icon">
+                                            <i class="bi bi-info-circle"></i>
+                                        </div>
+                                        <h6 class="mb-0 fw-semibold">Informations générales</h6>
+                                    </div>
+                                    <div class="section-body">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control form-control-modern" id="hotelName" placeholder="Nom de l'hôtel" required>
+                                                    <label for="hotelName">
+                                                        <i class="bi bi-building me-2 text-primary"></i>Nom de l'hôtel <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="invalid-feedback">Veuillez saisir le nom de l'hôtel</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control form-control-modern" id="hotelLocation" placeholder="Adresse" required>
+                                                    <label for="hotelLocation">
+                                                        <i class="bi bi-geo-alt me-2 text-primary"></i>Adresse complète <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="invalid-feedback">Veuillez saisir l'adresse de l'hôtel</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="email" class="form-control form-control-modern" id="hotelEmail" placeholder="Email" required>
+                                                    <label for="hotelEmail">
+                                                        <i class="bi bi-envelope me-2 text-primary"></i>Email de contact <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="invalid-feedback">Veuillez saisir un email valide</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="tel" class="form-control form-control-modern" id="hotelPhone" placeholder="Téléphone" required>
+                                                    <label for="hotelPhone">
+                                                        <i class="bi bi-telephone me-2 text-primary"></i>Téléphone <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="invalid-feedback">Veuillez saisir un numéro de téléphone valide</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <textarea class="form-control form-control-modern" id="hotelDescription" placeholder="Description" style="height: 100px"></textarea>
+                                                    <label for="hotelDescription">
+                                                        <i class="bi bi-card-text me-2 text-primary"></i>Description de l'établissement
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section Médias -->
+                            <div class="col-lg-4">
+                                <div class="form-section sticky-section">
+                                    <div class="section-header">
+                                        <div class="section-icon">
+                                            <i class="bi bi-images"></i>
+                                        </div>
+                                        <h6 class="mb-0 fw-semibold">Logo de l'hôtel</h6>
+                                    </div>
+                                    <div class="section-body ">
+                                        <div class="upload-area" id="uploadArea">
+                                            <div class="upload-preview">
+                                                <img id="hotelLogoPreview" src="https://via.placeholder.com/300x200/e9ecef/6c757d?text=Cliquez+pour+ajouter" 
+                                                     class="preview-image" 
+                                                     alt="Logo preview">
+                                                <div class="upload-overlay">
+                                                    <i class="bi bi-camera-fill"></i>
+                                                    <p class="mb-0 mt-2">Changer le logo</p>
+                                                </div>
+                                            </div>
+                                            <input type="file" id="hotelLogo" class="d-none" accept="image/*">
+                                        </div>
+                                        <div class="upload-info">
+                                            <small class="info-text d-block">
+                                                <i class="bi bi-info-circle me-1"></i>
+                                                Format: JPG, PNG (max 5 Mo)
+                                            </small>
+                                            <small class="info-text d-block">
+                                                <i class="bi bi-aspect-ratio me-1"></i>
+                                                Dimensions: 400x300px recommandé
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="custom-modal-footer">
+                        <button type="button" class="btn btn-outline-secondary btn-modern" onclick="window.location.href='{% url 'managerpanel:manager_dashboard' %}'">
+                            <i class="bi bi-x-circle me-2"></i>
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-modern">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Créer l'hôtel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Message de succès -->
+<div id="successMessage" class="position-fixed top-0 end-0 p-3" style="z-index: 10000; display: none;">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <strong class="me-auto">Succès</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            L'hôtel a été créé avec succès !
+        </div>
+    </div>
+</div>
+
+<!-- Styles CSS pour le modal personnalisé avec support Light/Dark Bootstrap -->
+<style>
+    /* ========== UTILISATION DES VARIABLES BOOTSTRAP ========== */
+    :root,
+    [data-bs-theme="light"] {
+        --modal-bg: var(--bs-body-bg);
+        --modal-text: var(--bs-body-color);
+        --modal-header-bg: linear-gradient(135deg, var(--bs-primary) 0%, #4136ae 100%);
+        --modal-header-text: #ffffff;
+        --modal-body-bg: var(--bs-tertiary-bg);
+        --section-bg: var(--bs-body-bg);
+        --section-border: var(--bs-border-color);
+        --section-shadow: rgba(29, 58, 83, 0.08);
+        --section-shadow-hover: rgba(29, 58, 83, 0.12);
+        --input-bg: var(--bs-form-control-bg);
+        --input-border: var(--bs-border-color);
+        --input-text: var(--bs-body-color);
+        --input-focus-border: var(--bs-primary);
+        --input-focus-shadow: rgba(81, 67, 217, 0.15);
+        --icon-bg: var(--bs-primary-bg-subtle);
+        --icon-color: var(--bs-primary);
+        --info-text: var(--bs-secondary-color);
+        --upload-bg: var(--bs-tertiary-bg);
+        --upload-overlay-bg: rgba(81, 67, 217, 0.9);
+        --footer-bg: var(--bs-body-bg);
+        --footer-border: var(--bs-border-color);
+        --backdrop-bg: linear-gradient(135deg, rgba(81, 67, 217, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
+    }
+
+    [data-bs-theme="dark"] {
+        --modal-bg: var(--bs-body-bg);
+        --modal-text: var(--bs-body-color);
+        --modal-header-bg: linear-gradient(135deg, var(--bs-primary) 0%, #4136ae 100%);
+        --modal-header-text: #ffffff;
+        --modal-body-bg: var(--bs-tertiary-bg);
+        --section-bg: var(--bs-secondary-bg);
+        --section-border: var(--bs-border-color);
+        --section-shadow: rgba(0, 0, 0, 0.3);
+        --section-shadow-hover: rgba(0, 0, 0, 0.5);
+        --input-bg: var(--bs-tertiary-bg);
+        --input-border: var(--bs-border-color);
+        --input-text: var(--bs-body-color);
+        --input-focus-border: var(--bs-primary);
+        --input-focus-shadow: rgba(81, 67, 217, 0.3);
+        --icon-bg: var(--bs-primary-bg-subtle);
+        --icon-color: var(--bs-primary-text);
+        --info-text: var(--bs-secondary-color);
+        --upload-bg: var(--bs-tertiary-bg);
+        --upload-overlay-bg: rgba(81, 67, 217, 0.95);
+        --footer-bg: var(--bs-secondary-bg);
+        --footer-border: var(--bs-border-color);
+        --backdrop-bg: linear-gradient(135deg, rgba(81, 67, 217, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%);
+    }
+
+    /* ========== BACKDROP ========== */
+    .modal-backdrop-custom {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--backdrop-bg);
+        z-index: 1050;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        transition: opacity 0.4s ease, background 0.3s ease;
+    }
+
+    .modal-backdrop-custom.fade {
+        opacity: 0;
+    }
+
+    .modal-backdrop-custom.show {
+        opacity: 1;
+    }
+
+    /* ========== CONTAINER ========== */
+    .custom-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1055;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        overflow-y: auto;
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .custom-modal-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: auto;
+        animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px) scale(0.95);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+    }
+
+    .custom-modal-content {
+        background: var(--modal-bg);
+        color: var(--modal-text);
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ========== EN-TÊTE ========== */
+    .custom-modal-header {
+        background: var(--modal-header-bg);
+        padding: 1.75rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--modal-header-text);
+        border-bottom: none;
+    }
+
+    .header-subtitle {
+        opacity: 0.85;
+    }
+
+    .modal-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    /* Toggle Theme Button */
+    
+
+   
+
+    .btn-close-custom {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-close-custom:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+
+    /* Barre de progression */
+    .progress-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .progress-step.active .step-number {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+    }
+
+    .step-label {
+        font-size: 13px;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .progress-step.active .step-label {
+        color: #0d6efd;
+        font-weight: 600;
+    }
+
+    .progress-line {
+        width: 60px;
+        height: 2px;
+        background: #dee2e6;
+        margin-bottom: 24px;
+    }
+
+    /* ========== CORPS DU MODAL ========== */
+    .custom-modal-body {
+        padding: 2rem;
+        overflow-y: auto;
+        max-height: calc(90vh - 220px);
+        background: var(--modal-body-bg);
+        transition: background 0.3s ease;
+    }
+
+    /* ========== SECTIONS DU FORMULAIRE ========== */
+    .form-section {
+        background: var(--section-bg);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px var(--section-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .form-section:hover {
+        box-shadow: 0 4px 16px var(--section-shadow-hover);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--section-border);
+    }
+
+    .section-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--icon-bg);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--icon-color);
+        font-size: 18px;
+    }
+
+    .section-body {
+        padding-top: 0.5rem;
+    }
+
+    /* ========== CHAMPS DE FORMULAIRE ========== */
+    .form-control-modern {
+        border: 2px solid var(--input-border);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        height: calc(3.5rem + 2px);
+        background: var(--input-bg);
+        color: var(--input-text);
+    }
+
+    .form-control-modern:focus {
+        border-color: var(--input-focus-border);
+        box-shadow: 0 0 0 4px var(--input-focus-shadow);
+        background: var(--input-bg);
+        color: var(--input-text);
+    }
+
+    .form-floating > label {
+        padding: 1rem 1rem;
+        font-size: 14px;
+        color: var(--info-text);
+    }
+
+    .form-floating > .form-control-modern:focus ~ label,
+    .form-floating > .form-control-modern:not(:placeholder-shown) ~ label {
+        opacity: 0.85;
+        transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+    }
+
+    /* ========== ZONE D'UPLOAD ========== */
+    .upload-area {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+
+    .upload-preview {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        border-radius: 12px;
+        background: var(--upload-bg);
+        transition: background 0.3s ease;
+    }
+
+    .preview-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .upload-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--upload-overlay-bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        font-size: 24px;
+    }
+
+    .upload-area:hover .upload-overlay {
+        opacity: 1;
+    }
+
+    .upload-area:hover .preview-image {
+        transform: scale(1.05);
+    }
+
+    .upload-info {
+        padding: 0.75rem;
+        background: var(--upload-bg);
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        transition: background 0.3s ease;
+    }
+
+    .info-text {
+        color: var(--info-text);
+        transition: color 0.3s ease;
+    }
+
+    .upload-info small {
+        margin-bottom: 0.25rem;
+    }
+
+    /* ========== SECTION STICKY ========== */
+    .sticky-section {
+        position: sticky;
+        top: 1rem;
+    }
+
+    /* ========== FOOTER ========== */
+    .custom-modal-footer {
+        padding: 1.5rem 2rem;
+        background: var(--footer-bg);
+        border-top: 1px solid var(--footer-border);
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-modern {
+        padding: 0.75rem 1.75rem;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .btn-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-modern:active {
+        transform: translateY(0);
+    }
+
+    /* ========== SCROLLBAR ========== */
+    .custom-modal-body::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .custom-modal-body::-webkit-scrollbar-track {
+        background: var(--input-border);
+        border-radius: 10px;
+    }
+
+    .custom-modal-body::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #0d6efd, #0a58ca);
+        border-radius: 10px;
+        border: 2px solid var(--input-border);
+    }
+
+    .custom-modal-body::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #0a58ca, #084298);
+    }
+
+    /* ========== EFFETS SPÉCIAUX DARK MODE ========== */
+    [data-bs-theme="dark"] .custom-modal-content {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    [data-bs-theme="dark"] .form-section {
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    [data-bs-theme="dark"] .section-header {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-bs-theme="dark"] .btn-outline-secondary {
+        color: var(--bs-secondary-text);
+        border-color: var(--bs-border-color);
+    }
+
+    [data-bs-theme="dark"] .btn-outline-secondary:hover {
+        background: var(--bs-secondary-bg);
+        color: var(--bs-emphasis-color);
+    }
+
+    /* Animation du toggle de thème */
+    
+
+    
+
+   
+
+    /* Effet de glow sur les inputs en focus (dark mode) */
+    [data-bs-theme="dark"] .form-control-modern:focus {
+        box-shadow: 0 0 0 4px var(--input-focus-shadow), 0 0 20px rgba(81, 67, 217, 0.2);
+    }
+
+    /* Amélioration de la lisibilité en dark mode */
+    [data-bs-theme="dark"] .section-header h6 {
+        color: var(--bs-heading-color);
+    }
+
+    [data-bs-theme="dark"] .invalid-feedback {
+        color: var(--bs-danger-text);
+    }
+
+    [data-bs-theme="dark"] .text-primary {
+        color: var(--bs-primary-text) !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .sticky-section {
+            position: relative;
+            top: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .custom-modal-overlay {
+            padding: 0;
+        }
+
+        .custom-modal-container {
+            max-width: 100%;
+        }
+
+        .custom-modal-content {
+            max-height: 100vh;
+            border-radius: 0;
+        }
+
+        .custom-modal-header {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .modal-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+        }
+
+        .custom-modal-header h4 {
+            font-size: 1.25rem;
+        }
+
+        .custom-modal-body {
+            padding: 1.5rem;
+            max-height: calc(100vh - 200px);
+        }
+
+        .progress-indicator {
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+
+        .step-label {
+            font-size: 11px;
+        }
+
+        .progress-line {
+            width: 40px;
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            padding: 1.25rem;
+        }
+
+        .custom-modal-footer {
+            padding: 1rem 1.5rem;
+            flex-direction: column-reverse;
+        }
+
+        .btn-modern {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .progress-indicator {
+            flex-wrap: wrap;
+        }
+
+        .progress-line {
+            display: none;
+        }
+    }
+</style>
+
+<!-- Script pour gérer la soumission du formulaire et le thème -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('addHotelForm');
+    const loader = document.getElementById('hotelFormLoader');
+    const successMessage = document.getElementById('successMessage');
+    const hotelLogoInput = document.getElementById('hotelLogo');
+    const hotelLogoPreview = document.getElementById('hotelLogoPreview');
+    const uploadArea = document.getElementById('uploadArea');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+    
+    // Empêcher le scroll du body quand le modal est ouvert
+    document.body.style.overflow = 'hidden';
+
+    // ========== GESTION DU THÈME BOOTSTRAP ==========
+    // Récupérer le thème actuel du système Bootstrap
+    let currentTheme = htmlElement.getAttribute('data-bs-theme') || 'light';
+    updateThemeIcon(currentTheme);
+
+    // Toggle du thème
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Appliquer le thème sur l'élément HTML (système Bootstrap)
+            htmlElement.setAttribute('data-bs-theme', currentTheme);
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('theme', currentTheme);
+            
+            // Mettre à jour l'icône
+            updateThemeIcon(currentTheme);
+            
+            // Animation du bouton
+            this.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'rotate(0deg)';
+            }, 300);
+        });
+    }
+
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'bi bi-moon-stars-fill';
+        } else {
+            themeIcon.className = 'bi bi-sun-fill';
+        }
+    }
+
+    // Gestion du clic sur la zone d'upload
+    if (uploadArea) {
+        uploadArea.addEventListener('click', function() {
+            hotelLogoInput.click();
+        });
+    }
+
+    // Gestion de l'aperçu du logo avec animation
+    if (hotelLogoInput) {
+        hotelLogoInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                
+                // Vérifier la taille du fichier (5 Mo max)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Le fichier est trop volumineux. Taille maximale : 5 Mo');
+                    return;
+                }
+                
+                // Vérifier le type de fichier
+                if (!file.type.match('image.*')) {
+                    alert('Veuillez sélectionner une image valide (JPG, PNG)');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Animation de fondu
+                    hotelLogoPreview.style.opacity = '0';
+                    setTimeout(() => {
+                        hotelLogoPreview.src = e.target.result;
+                        hotelLogoPreview.style.opacity = '1';
+                    }, 200);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Animation des champs de formulaire au focus
+    const formControls = document.querySelectorAll('.form-control-modern');
+    formControls.forEach(control => {
+        control.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        control.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+    });
+    
+    // Gestion de la soumission du formulaire
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                
+                // Scroll vers le premier champ invalide
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+                return;
+            }
+            
+            // Afficher le loader
+            document.getElementById('hotelFormContent').classList.add('d-none');
+            loader.classList.remove('d-none');
+            
+            try {
+                // Ici, vous feriez normalement un appel AJAX
+                // const formData = new FormData(form);
+                // await fetch('/api/hotels', { method: 'POST', body: formData });
+                
+                // Simulation d'un délai
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Afficher le message de succès
+                successMessage.style.display = 'block';
+                
+                // Animation de succès
+                setTimeout(() => {
+                    successMessage.querySelector('.toast').classList.add('show');
+                }, 100);
+                
+                // Rediriger après 2 secondes
+                setTimeout(() => {
+                    window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
+                }, 2500);
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                // Gérer l'erreur
+                alert('Une erreur est survenue lors de la création de l\'hôtel.');
+                loader.classList.add('d-none');
+                document.getElementById('hotelFormContent').classList.remove('d-none');
+            }
+        });
+    }
+
+    // Fermer le modal avec la touche Échap
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (confirm('Voulez-vous vraiment quitter sans enregistrer ?')) {
+                window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
+            }
+        }
+    });
+
+    // Restaurer le scroll du body quand on quitte
+    window.addEventListener('beforeunload', function() {
+        document.body.style.overflow = '';
+    });
+
+    // Animation d'entrée pour les sections
+    const sections = document.querySelectorAll('.form-section');
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            section.style.transition = 'all 0.4s ease';
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }, 100 * index);
+    });
+});
+</script>

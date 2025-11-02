@@ -1,43 +1,45 @@
-/**
-* Booking - Multipurpose Online Booking Theme
-*
-* @author Webestica (https://www.webestica.com/)
-* @version 1.2.0
-**/
 
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+let currentTheme = htmlElement.getAttribute('data-bs-theme') || 'light';
+    updateThemeIcon(currentTheme);
 
-/* ===================
-Table Of Content
-======================
-01 PRELOADER
-02 MEGA MENU
-03 STICKY HEADER
-04 TINY SLIDER
-05 STICKY BAR
-06 TOOLTIP
-07 POPOVER
-08 BACK TO TOP
-09 GLIGHTBOX
-10 CHOICES
-11 AOS ANIMATION
-12 QUILL EDITOR
-13 STEPPER
-14 PRICING
-15 STICKY ELEMENT
-16 FLATPICKER
-17 SPLIDE SLIDER
-18 NOUISLIDER
-19 DROPZONE
-20 FAKE PASSWORD
-21 AUTO TAB
-22 GUEST SELECTOR
-23 PARALLAX BACKGROUND
-24 OVERLAY SCROLLBAR
-25 TRAFFIC CHART
-26 TRAFFIC CHART 2
-27 TRAFFIC CHART 3
-28 TRAFFIC CHART 4
-====================== */
+    // Toggle du thème
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Appliquer le thème sur l'élément HTML (système Bootstrap)
+            htmlElement.setAttribute('data-bs-theme', currentTheme);
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('theme', currentTheme);
+            
+            // Mettre à jour l'icône
+            updateThemeIcon(currentTheme);
+            
+            // Animation du bouton
+            this.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'rotate(0deg)';
+            }, 300);
+        });
+    }
+
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'bi bi-moon-stars-fill';
+        } else {
+            themeIcon.className = 'bi bi-sun-fill';
+        }
+    }
+
+    // Gestion du clic sur la zone d'upload
+    if (uploadArea) {
+        uploadArea.addEventListener('click', function() {
+            hotelLogoInput.click();
+        });
+    }
 
 "use strict";
 !function () {
