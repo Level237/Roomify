@@ -26,7 +26,8 @@ urlpatterns = [
     path('',include('core.urls')),
     path('accounts/',include('accounts.urls')),
     path('customer/',include('customerpanel.urls')),
-    path('manager/',include("managerpanel.urls"))
+    path('manager/',include("managerpanel.urls")),
+    path('hotels/',include("hotels.urls"))
 ]
 
 if settings.DEBUG:
