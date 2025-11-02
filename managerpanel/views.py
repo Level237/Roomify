@@ -14,13 +14,8 @@ from roles.models import Role
 
 User = get_user_model()
 def dashboard_manager(request):
-    show_hotel_form = request.GET.get('r')
-    
-    if show_hotel_form == 'new-hotel':
-        show_hotel_form = True
-    else:
-        show_hotel_form = False
-    return render(request,"manager/dashboard.html",{'show_hotel_form':show_hotel_form})
+
+    return render(request,"manager/dashboard.html")
 
 def switch_hotel(request,hotel_id):
     hotel= get_object_or_404(Hotel,id=hotel_id,manager=request.user)
