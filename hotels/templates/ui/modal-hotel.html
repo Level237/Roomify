@@ -37,7 +37,7 @@
             
             <!-- Contenu du formulaire -->
             <div id="hotelFormContent">
-                <form id="addHotelForm" class="needs-validation" action={% url 'managerpanel:hotels_list' %} method="post" enctype="multipart/form-data">
+                <form  class="needs-validation" action={% url 'managerpanel:hotels_list' %} method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="custom-modal-body">
                       
@@ -823,9 +823,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 successMessage.style.display = 'block';
                 
                 // Rediriger après 2 secondes
-                setTimeout(() => {
-                    window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
-                }, 2000);
+               
                 
             } catch (error) {
                 console.error('Erreur:', error);

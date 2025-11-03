@@ -80,7 +80,7 @@ def hotels_list(request):
             hotel = form.save(commit=False)
             hotel.manager =request.user
             hotel.save()
-            return redirect("manager:hotels_list")
+            return redirect("managerpanel:hotels_list")
     
     return render(request,"manager/hotels/hotel-list.html",{
         'form':form,
