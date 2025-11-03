@@ -1,11 +1,11 @@
 from django import forms
 
 
-class EmployeeCreationForm(forms.ModelForm):
+class EmployeeCreationForm(forms.Form):
     username = forms.CharField(max_length=50)
     email = forms.CharField(max_length=255)
  
-class HotelCreationForm(forms.ModelForm):
+class HotelCreationForm(forms.Form):
      name=forms.CharField(max_length=50, required=True,
                           widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel name"}))
      address = forms.CharField(max_length=255, required=True,

@@ -2,7 +2,7 @@ from accounts.utils import account_activation_token
 from core.utils import get_base_url
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404,redirect
-from hotels.forms import EmployeeCreationForm
+from hotels.forms import EmployeeCreationForm, HotelCreationForm
 from hotels.models import Hotel,Hotelier
 # Create your views here.
 from django.http import HttpResponseForbidden
@@ -70,8 +70,22 @@ def create_hotel(request,hotel_id):
         
 
 def hotels_list(request):
+    show_hotel_form = request.GET.get('r') == 'show-hotel'
+    form = HotelCreationForm()
     
-    return render(request,"manager/hotels/hotel-list.html")
+    if request.method == "POST" :
+        form = HotelCreationForm(request.POST,request.FILES)
+        
+        if form.is_valid():
+            hotel = form.save(commit=False)
+            hotel.manager =request.user
+            hotel.save()
+            return redirect("manager:hotels_list")
+    
+    return render(request,"manager/hotels/hotel-list.html",{
+        'form':form,
+        'show_hotel_form':show_hotel_form,
+    })
         
        
     

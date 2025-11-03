@@ -15,7 +15,7 @@ class Hotel(models.Model):
                               limit_choices_to={'role__name': 'manager'},
                               related_name="hotels"
                               )
-    
+    is_active=models.BooleanField(default=False)
     name= models.CharField(max_length=50)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=150)
