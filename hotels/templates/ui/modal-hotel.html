@@ -37,7 +37,8 @@
             
             <!-- Contenu du formulaire -->
             <div id="hotelFormContent">
-                <form id="addHotelForm" class="needs-validation" novalidate>
+                <form id="addHotelForm" class="needs-validation" action={% url 'managerpanel:hotels_list' %} method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="custom-modal-body">
                       
 
@@ -55,47 +56,72 @@
                                         <div class="row g-3">
                                             <div class="col-12">
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control form-control-modern" id="hotelName" placeholder="Nom de l'hôtel" required>
+                                                    {{form.name}}
+                                                     {% if form.name.errors %}
+                                                        <div class="text-danger small">{{ form.name.errors.0 }}</div>
+                                                    {% endif %}
                                                     <label for="hotelName">
                                                         <i class="bi bi-building me-2 text-primary"></i>Nom de l'hôtel <span class="text-danger">*</span>
                                                     </label>
-                                                    <div class="invalid-feedback">Veuillez saisir le nom de l'hôtel</div>
+                                                
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="form-floating">
-                                                    <input type="text" class="form-control form-control-modern" id="hotelLocation" placeholder="Adresse" required>
-                                                    <label for="hotelLocation">
-                                                        <i class="bi bi-geo-alt me-2 text-primary"></i>Adresse complète <span class="text-danger">*</span>
-                                                    </label>
-                                                    <div class="invalid-feedback">Veuillez saisir l'adresse de l'hôtel</div>
-                                                </div>
-                                            </div>
+                                            
 
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input type="email" class="form-control form-control-modern" id="hotelEmail" placeholder="Email" required>
+                                                    {{form.email}}
+                                                    {% if form.email.errors %}
+                                                        <div class="text-danger small">{{ form.email.errors.0 }}</div>
+                                                    {% endif %}
                                                     <label for="hotelEmail">
                                                         <i class="bi bi-envelope me-2 text-primary"></i>Email de contact <span class="text-danger">*</span>
                                                     </label>
-                                                    <div class="invalid-feedback">Veuillez saisir un email valide</div>
+                                                    
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input type="tel" class="form-control form-control-modern" id="hotelPhone" placeholder="Téléphone" required>
+                                                    {{form.phone_number}}
+                                                    {% if form.phone_number.errors %}
+                                                        <div class="text-danger small">{{ form.phone_number.errors.0 }}</div>
+                                                    {% endif %}
                                                     <label for="hotelPhone">
                                                         <i class="bi bi-telephone me-2 text-primary"></i>Téléphone <span class="text-danger">*</span>
                                                     </label>
                                                     <div class="invalid-feedback">Veuillez saisir un numéro de téléphone valide</div>
                                                 </div>
                                             </div>
-
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{form.address}}
+                                                    {% if form.address.errors %}
+                                                        <div class="text-danger small">{{ form.address.errors.0 }}</div>
+                                                    {% endif %}
+                                                    <label for="hotelLocation">
+                                                        <i class="bi bi-geo-alt me-2 text-primary"></i>Adresse complète <span class="text-danger">*</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{form.city}}
+                                                    {% if form.city.errors %}
+                                                        <div class="text-danger small">{{ form.city.errors.0 }}</div>
+                                                    {% endif %}
+                                                    <label for="hotelLocation">
+                                                        <i class="bi bi-geo-alt me-2 text-primary"></i>City <span class="text-danger">*</span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <div class="form-floating">
-                                                    <textarea class="form-control form-control-modern" id="hotelDescription" placeholder="Description" style="height: 100px"></textarea>
+                                                      {{form.description}}
+                                                    {% if form.description.errors %}
+                                                        <div class="text-danger small">{{ form.description.errors.0 }}</div>
+                                                    {% endif %}
                                                     <label for="hotelDescription">
                                                         <i class="bi bi-card-text me-2 text-primary"></i>Description de l'établissement
                                                     </label>

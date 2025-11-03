@@ -6,6 +6,6 @@ from .models import Hotel
 
 
 class HotelAdmin(admin.ModelAdmin):
-    list_display=('name','manager','city','country','hotel_profile')
+    list_display=('name','manager','city','hotel_profile')
 
 admin.site.register(Hotel,HotelAdmin)
