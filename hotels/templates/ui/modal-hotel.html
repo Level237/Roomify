@@ -133,40 +133,38 @@
                             </div>
 
                             <!-- Section Médias -->
-                            <div class="col-lg-4">
-                                <div class="form-section sticky-section">
-                                    <div class="section-header">
-                                        <div class="section-icon">
-                                            <i class="bi bi-images"></i>
-                                        </div>
-                                        <h6 class="mb-0 fw-semibold">Logo de l'hôtel</h6>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0"><i class="bi bi-images me-2"></i>Médias</h6>
                                     </div>
-                                    <div class="section-body ">
-                                        <div class="upload-area" id="uploadArea">
-                                            <div class="upload-preview">
-                                                <img id="hotelLogoPreview" src="https://via.placeholder.com/300x200/e9ecef/6c757d?text=Cliquez+pour+ajouter" 
-                                                     class="preview-image" 
-                                                     alt="Logo preview">
-                                                <div class="upload-overlay">
-                                                    <i class="bi bi-camera-fill"></i>
-                                                    <p class="mb-0 mt-2">Changer le logo</p>
-                                                </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <div class="position-relative d-inline-block">
+                                                <img id="hotelLogoPreview" src="https://via.placeholder.com/200x150?text=Logo" 
+                                                     class="img-thumbnail rounded-3 mb-2" 
+                                                     style="width: 200px; height: 150px; object-fit: cover;">
+                                                <label for="hotelLogo" class="position-absolute bottom-0 end-0 bg-primary text-white" 
+                                                       style="cursor: pointer;" title="Changer le logo">
+                                                    <button id="hotelLogoButton" type="button" class="btn btn-primary btn-sm">
+                                                       Change profile <i class="bi bi-camera"></i>
+                                                       {{form.hotel_profile}}
+                                                    </button>
+                                                    
+                                                    {% if form.hotel_profile.errors %}
+                                                        <div class="text-danger small">{{ form.hotel_profile.errors.0 }}</div>
+                                                    {% endif %}
+                                                    
+                                                </label>
                                             </div>
-                                            <input type="file" id="hotelLogo" class="d-none" accept="image/*">
+                                            <div class="small text-muted">Format recommandé : 400x300px</div>
                                         </div>
-                                        <div class="upload-info">
-                                            <small class="info-text d-block">
-                                                <i class="bi bi-info-circle me-1"></i>
-                                                Format: JPG, PNG (max 5 Mo)
-                                            </small>
-                                            <small class="info-text d-block">
-                                                <i class="bi bi-aspect-ratio me-1"></i>
-                                                Dimensions: 400x300px recommandé
-                                            </small>
-                                        </div>
+
+                                        
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -778,101 +776,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('successMessage');
     const hotelLogoInput = document.getElementById('hotelLogo');
     const hotelLogoPreview = document.getElementById('hotelLogoPreview');
-    const uploadArea = document.getElementById('uploadArea');
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const htmlElement = document.documentElement;
-    
+    const hotelLogoButton = document.getElementById('hotelLogoButton');
     // Empêcher le scroll du body quand le modal est ouvert
     document.body.style.overflow = 'hidden';
 
-    // ========== GESTION DU THÈME BOOTSTRAP ==========
-    // Récupérer le thème actuel du système Bootstrap
-    let currentTheme = htmlElement.getAttribute('data-bs-theme') || 'light';
-    updateThemeIcon(currentTheme);
-
-    // Toggle du thème
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            // Appliquer le thème sur l'élément HTML (système Bootstrap)
-            htmlElement.setAttribute('data-bs-theme', currentTheme);
-            
-            // Sauvegarder dans localStorage
-            localStorage.setItem('theme', currentTheme);
-            
-            // Mettre à jour l'icône
-            updateThemeIcon(currentTheme);
-            
-            // Animation du bouton
-            this.style.transform = 'rotate(360deg)';
-            setTimeout(() => {
-                this.style.transform = 'rotate(0deg)';
-            }, 300);
-        });
-    }
-
-    function updateThemeIcon(theme) {
-        if (theme === 'dark') {
-            themeIcon.className = 'bi bi-moon-stars-fill';
-        } else {
-            themeIcon.className = 'bi bi-sun-fill';
-        }
-    }
-
-    // Gestion du clic sur la zone d'upload
-    if (uploadArea) {
-        uploadArea.addEventListener('click', function() {
-            hotelLogoInput.click();
-        });
-    }
-
-    // Gestion de l'aperçu du logo avec animation
+    hotelLogoButton.addEventListener('click', function() {
+        hotelLogoInput.click();
+    });
+    // Gestion de l'aperçu du logo
     if (hotelLogoInput) {
         hotelLogoInput.addEventListener('change', function(e) {
             if (this.files && this.files[0]) {
-                const file = this.files[0];
-                
-                // Vérifier la taille du fichier (5 Mo max)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Le fichier est trop volumineux. Taille maximale : 5 Mo');
-                    return;
-                }
-                
-                // Vérifier le type de fichier
-                if (!file.type.match('image.*')) {
-                    alert('Veuillez sélectionner une image valide (JPG, PNG)');
-                    return;
-                }
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Animation de fondu
-                    hotelLogoPreview.style.opacity = '0';
-                    setTimeout(() => {
-                        hotelLogoPreview.src = e.target.result;
-                        hotelLogoPreview.style.opacity = '1';
-                    }, 200);
+                    hotelLogoPreview.src = e.target.result;
                 }
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(this.files[0]);
             }
         });
     }
-
-    // Animation des champs de formulaire au focus
-    const formControls = document.querySelectorAll('.form-control-modern');
-    formControls.forEach(control => {
-        control.addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
-        });
-        
-        control.addEventListener('blur', function() {
-            if (!this.value) {
-                this.parentElement.classList.remove('focused');
-            }
-        });
-    });
     
     // Gestion de la soumission du formulaire
     if (form) {
@@ -882,13 +804,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!form.checkValidity()) {
                 e.stopPropagation();
                 form.classList.add('was-validated');
-                
-                // Scroll vers le premier champ invalide
-                const firstInvalid = form.querySelector(':invalid');
-                if (firstInvalid) {
-                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    firstInvalid.focus();
-                }
                 return;
             }
             
@@ -907,15 +822,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Afficher le message de succès
                 successMessage.style.display = 'block';
                 
-                // Animation de succès
-                setTimeout(() => {
-                    successMessage.querySelector('.toast').classList.add('show');
-                }, 100);
-                
                 // Rediriger après 2 secondes
                 setTimeout(() => {
                     window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
-                }, 2500);
+                }, 2000);
                 
             } catch (error) {
                 console.error('Erreur:', error);
@@ -930,27 +840,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fermer le modal avec la touche Échap
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (confirm('Voulez-vous vraiment quitter sans enregistrer ?')) {
-                window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
-            }
+            window.location.href = "{% url 'managerpanel:manager_dashboard' %}";
         }
-    });
-
-    // Restaurer le scroll du body quand on quitte
-    window.addEventListener('beforeunload', function() {
-        document.body.style.overflow = '';
-    });
-
-    // Animation d'entrée pour les sections
-    const sections = document.querySelectorAll('.form-section');
-    sections.forEach((section, index) => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            section.style.transition = 'all 0.4s ease';
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        }, 100 * index);
     });
 });
 </script>

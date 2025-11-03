@@ -72,7 +72,7 @@ def create_hotel(request,hotel_id):
 def hotels_list(request):
     show_hotel_form = request.GET.get('r') == 'new-hotel'
     form = HotelCreationForm()
-    
+    hotels=Hotel.objects.filter(manager=request.user)
     if request.method == "POST" :
         form = HotelCreationForm(request.POST,request.FILES)
         
@@ -85,6 +85,7 @@ def hotels_list(request):
     return render(request,"manager/hotels/hotel-list.html",{
         'form':form,
         'show_hotel_form':show_hotel_form,
+        'hotels':hotels
     })
         
        

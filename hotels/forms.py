@@ -18,5 +18,5 @@ class HotelCreationForm(forms.Form):
                                     widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel phone number"}))
      description = forms.CharField(required=False,
                                    widget=forms.Textarea(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel description","style":"height: 100px"}))
-     hotel_profile = forms.ImageField(required=True)
+     hotel_profile = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={"class":"d-none","placeholder":"Enter Hotel description","id":"hotelLogo"}))
      
