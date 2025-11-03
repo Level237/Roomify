@@ -1,0 +1,215 @@
+{% extends 'layouts/manager/main.html' %}
+{% load static %}
+{% block title %}Mes Hôtels{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper p-xxl-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1 class="h3 mb-1">Mes Hôtels</h1>
+                    <p class="text-muted mb-0">Gérez tous vos établissements en un seul endroit</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-funnel me-2"></i>Filtrer
+                    </button>
+                    <a href="?r=new-hotel" class="btn btn-primary">
+                        <i class="bi bi-plus-lg me-2"></i>Ajouter un hôtel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-shape icon-lg bg-primary bg-opacity-10 text-primary rounded-3 me-3">
+                            <i class="bi bi-building fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-uppercase text-muted mb-1 small">Total Hôtels</h6>
+                            <h3 class="mb-0">5</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-shape icon-lg bg-success bg-opacity-10 text-success rounded-3 me-3">
+                            <i class="bi bi-check-circle fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-uppercase text-muted mb-1 small">Actifs</h6>
+                            <h3 class="mb-0">4</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-shape icon-lg bg-warning bg-opacity-10 text-warning rounded-3 me-3">
+                            <i class="bi bi-pause-circle fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-uppercase text-muted mb-1 small">Inactifs</h6>
+                            <h3 class="mb-0">1</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-shape icon-lg bg-info bg-opacity-10 text-info rounded-3 me-3">
+                            <i class="bi bi-door-open fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-uppercase text-muted mb-1 small">Total Chambres</h6>
+                            <h3 class="mb-0">142</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotels Grid -->
+    <div class="row g-4">
+        {% include 'manager/hotels/partials/hotel-card.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hotel-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hotel-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+    }
+    .hotel-img {
+        transition: transform 0.3s ease;
+    }
+    .hotel-card:hover .hotel-img {
+        transform: scale(1.05);
+    }
+    .icon-shape {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-lg {
+        width: 48px;
+        height: 48px;
+    }
+    .icon-xl {
+        width: 64px;
+        height: 64px;
+    }
+    .icon-xxl {
+        width: 80px;
+        height: 80px;
+    }
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+    }
+    .form-check-input:checked {
+        background-color: var(--bs-success);
+        border-color: var(--bs-success);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des switches pour activer/désactiver les hôtels
+    const hotelSwitches = document.querySelectorAll('[id^="hotelSwitch"]');
+    
+    hotelSwitches.forEach(switchEl => {
+        switchEl.addEventListener('change', function() {
+            const hotelId = this.dataset.hotelId;
+            const isActive = this.checked;
+            const card = this.closest('.hotel-card');
+            const badge = card.querySelector('.badge');
+            const img = card.querySelector('.hotel-img');
+            
+            if (isActive) {
+                card.classList.remove('opacity-75');
+                badge.className = 'badge bg-success';
+                badge.innerHTML = '<i class="bi bi-check-circle me-1"></i>Actif';
+                img.style.filter = 'none';
+                
+                // Notification de succès
+                showToast('Hôtel activé avec succès', 'success');
+            } else {
+                card.classList.add('opacity-75');
+                badge.className = 'badge bg-secondary';
+                badge.innerHTML = '<i class="bi bi-pause-circle me-1"></i>Inactif';
+                img.style.filter = 'grayscale(50%)';
+                
+                // Notification
+                showToast('Hôtel désactivé', 'warning');
+            }
+            
+            // Ici vous pouvez ajouter une requête AJAX pour mettre à jour le statut côté serveur
+            console.log(`Hôtel ${hotelId} ${isActive ? 'activé' : 'désactivé'}`);
+        });
+    });
+    
+    // Fonction pour afficher les toasts
+    function showToast(message, type = 'info') {
+        const toastHTML = `
+            <div class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        `;
+        
+        let toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+            document.body.appendChild(toastContainer);
+        }
+        
+        toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+        const toastElement = toastContainer.lastElementChild;
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+        
+        toastElement.addEventListener('hidden.bs.toast', function () {
+            toastElement.remove();
+        });
+    }
+});
+</script>
+{% endblock %}

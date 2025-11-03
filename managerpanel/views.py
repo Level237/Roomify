@@ -68,5 +68,10 @@ def create_hotel(request,hotel_id):
         frontend_url=get_base_url(request)
         send_mail_from_user(user,hotel,temp_password,token,frontend_url)
         
+
+def hotels_list(request):
+    
+    return render(request,"manager/hotels/hotel-list.html")
+        
        
     
