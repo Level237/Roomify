@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load custom_tags %}
 <nav class="navbar sidebar navbar-expand-xl navbar-light">
     <!-- Navbar brand for xl START -->
     <div class="d-flex align-items-center px-3 py-2">
@@ -52,7 +53,7 @@
             <!-- Navigation Menu -->
             <ul class="navbar-nav flex-column flex-grow-1" id="navbar-sidebar">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url "managerpanel:manager_dashboard" %}">
+                    <a class="nav-link {% active_link '/manager/dashboard' %}" href="{% url "managerpanel:manager_dashboard" %}">
                         <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -61,7 +62,7 @@
                     <div class="nav-link text-uppercase small fw-bold text-muted">Gestion</div>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'managerpanel:hotels_list' %}">
+                    <a class="nav-link {% active_link '/manager/hotels' %}" href="{% url 'managerpanel:hotels_list' %}">
                         <i class="bi bi-door-open me-2"></i> Hotels
                     </a>
                 </li>

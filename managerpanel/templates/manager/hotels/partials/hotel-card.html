@@ -3,18 +3,23 @@
 <div class="col-md-6 col-xl-4">
     <div class="card hotel-card border-0 h-100 shadow-sm">
         <div class="position-relative overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500" 
-                 class="card-img-top hotel-img" alt="Hôtel des Palmiers" style="height: 200px; object-fit: cover;">
+            <img src="{{hotel.hotel_profile.url}}" 
+                 class="card-img-top hotel-img" alt="Hotel {{hotel.name}}" style="height: 200px; object-fit: cover;">
             <div class="position-absolute top-0 start-0 w-100 p-3">
+
+                {% if hotel.is_active %}
                 <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Actif</span>
+                {% else %}
+                <span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i>Non actif</span>
+                {% endif %}
             </div>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="flex-grow-1">
-                    <h5 class="card-title mb-1">Hôtel des Palmiers</h5>
+                    <h5 class="card-title mb-1">{{hotel.name}}</h5>
                     <p class="text-muted small mb-0">
-                        <i class="bi bi-geo-alt me-1"></i>Paris, France
+                        <i class="bi bi-geo-alt me-1"></i>{{hotel.city}}, {{hotel.address}}
                     </p>
                 </div>
                 <div class="dropdown">
@@ -84,6 +89,7 @@
                 </div>
             </div>
             
+            {% if hotel.is_active %}
             <div class="d-flex justify-content-between align-items-center pt-3 border-top">
                 <span class="text-muted small">Statut</span>
                 <div class="form-check form-switch mb-0">
@@ -92,6 +98,7 @@
                     <label class="form-check-label" for="hotelSwitch1"></label>
                 </div>
             </div>
+            {%endif%}
         </div>
     </div>
 </div>
