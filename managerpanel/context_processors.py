@@ -1,12 +1,10 @@
 
 
-def hotel_modal_context(request):
-    show_hotel_form=False
-    show_hotel_param=request.GET.get('r')
-    
-    if show_hotel_param == 'new-hotel' and request.user.is_authenticated:
-        if hasattr(request.user,'role') and request.user.role.name == 'manager':
-            show_hotel_form=True
-    return {'show_hotel_form':show_hotel_form}
+from hotels.models import Hotel
+
+
+def get_recents_hotel_context(request):
+    get_hotels_recents=Hotel.objects.all().filter(manager=request.user).order_by('-created_at')[:3]
+    return {'hotels_recents':get_hotels_recents}
     
     

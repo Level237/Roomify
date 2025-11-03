@@ -23,7 +23,7 @@ class Hotel(models.Model):
     phone_number = models.CharField(max_length=20,null=True,blank=True)
     description= models.TextField(blank=True,null=True)
     hotel_profile=models.ImageField(upload_to='hotels/profiles/',blank=True,null=True)
-    
+    created_at = models.DateField(auto_now_add=True,null=True)
     def __str__(self):
         return self.name
     
