@@ -70,7 +70,7 @@ def create_hotel(request,hotel_id):
         
 
 def hotels_list(request):
-    show_hotel_form = request.GET.get('r') == 'show-hotel'
+    show_hotel_form = request.GET.get('r') == 'new-hotel'
     form = HotelCreationForm()
     
     if request.method == "POST" :

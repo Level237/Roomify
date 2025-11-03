@@ -3,7 +3,7 @@
 <nav class="navbar sidebar navbar-expand-xl navbar-light">
     <!-- Navbar brand for xl START -->
     <div class="d-flex align-items-center px-3 py-2">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url "core:home" %}">
             <img class="light-mode-item navbar-brand-item" src="{% static 'images/logo-light.png' %}" alt="logo" height="40">
              <img class="dark-mode-item navbar-brand-item" src="{% static 'images/logo.png' %}" alt="logo" height="40">
         </a>
@@ -49,7 +49,7 @@
             <!-- Navigation Menu -->
             <ul class="navbar-nav flex-column flex-grow-1" id="navbar-sidebar">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{% url "managerpanel:manager_dashboard" %}">
                         <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -57,7 +57,11 @@
                 <li class="nav-item mt-2">
                     <div class="nav-link text-uppercase small fw-bold text-muted">Gestion</div>
                 </li>
-                
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'managerpanel:hotels_list' %}">
+                        <i class="bi bi-door-open me-2"></i> Hotels
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="bi bi-calendar-check me-2"></i> Réservations
@@ -71,11 +75,7 @@
                     </a>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-door-open me-2"></i> Chambres
-                    </a>
-                </li>
+               
                 
                 <li class="nav-item mt-2">
                     <div class="nav-link text-uppercase small fw-bold text-muted">Analyse</div>
