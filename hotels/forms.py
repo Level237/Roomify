@@ -23,4 +23,4 @@ class HotelCreationForm(forms.ModelForm):
      
      class Meta:
          model=Hotel
-         fields = ['name', 'address', 'city', 'description', 'hotel_profile']
+         fields = ['name', 'address', 'email','phone_number','city', 'description', 'hotel_profile']

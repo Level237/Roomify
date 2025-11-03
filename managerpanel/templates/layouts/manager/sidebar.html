@@ -25,15 +25,16 @@
                         <i class="bi bi-chevron-down ms-2"></i>
                     </button>
                     <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown" style="position: absolute; z-index: 1070;">
-                        
-                        
+                        {% if hotels_recents.count > 0 %}
+                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        {% endif %}
                         {% if hotels_recents.count == 0 %}
                              <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
                              Nothing hotel
                         </a></li>
                         {% endif %}
                         {% for hotel in hotels_recents %}
-                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        
                         <li><hr class="dropdown-divider"></li>
                         <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
                             <i class="bi bi-building me-2"></i> {{hotel.name}}
