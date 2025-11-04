@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from roles.models import Role
+from rooms.models import Room
 
 
 User = get_user_model()
@@ -71,6 +72,12 @@ def create_hotel(request,hotel_id):
 
 def hotels_list(request):
     show_hotel_form = request.GET.get('r') == 'new-hotel'
+    total_hotels=Hotel.objects.filter(manager=request.user).count()
+    total_hotels_is_active=Hotel.objects.filter(manager=request.user,is_active=True).count()
+    total_hotels_is_not_active=Hotel.objects.filter(manager=request.user,is_active=False).count()
+    
+    manager=request.user
+    total_rooms=Room.objects.filter(hotel__manager=manager).count()
     form = HotelCreationForm()
     hotels=Hotel.objects.filter(manager=request.user)
     if request.method == "POST" :
@@ -85,7 +92,11 @@ def hotels_list(request):
     return render(request,"manager/hotels/hotel-list.html",{
         'form':form,
         'show_hotel_form':show_hotel_form,
-        'hotels':hotels
+        'hotels':hotels,
+        'total_hotels':total_hotels,
+        'total_hotels_is_active':total_hotels_is_active,
+        'total_hotels_is_not_active':total_hotels_is_not_active,
+        'total_rooms' : total_rooms
     })
         
        
