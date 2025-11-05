@@ -1,4 +1,5 @@
 from django.db import models
+from tenancy.manager import TenantManager
 from tenancy.models import TenantBaseModal
 
 # Create your models here.
@@ -10,6 +11,8 @@ class Room(TenantBaseModal):
     is_available=models.BooleanField(default=True)
     capacity= models.IntegerField(default=1)
     room_profile= models.ImageField(upload_to='rooms/profiles/',blank=True,null=False)
+    
+    objects= TenantManager()
     def __str_(self):
         return f"{self.hotel.name} - {self.room_number}"
     

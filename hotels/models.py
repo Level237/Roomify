@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 import shortuuid
+from tenancy.manager import TenantManager
+from tenancy.models import TenantBaseModal
 
 # Create your models here.
 
@@ -27,12 +29,12 @@ class Hotel(models.Model):
     def __str__(self):
         return self.name
     
-class Hotelier(models.Model):
+class Hotelier(TenantBaseModal):
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="hotelier")
-    hotel=models.ForeignKey(Hotel, on_delete=models.CASCADE)
     
     hired_date =models.DateField(auto_now_add=True)
     
+    objects= TenantManager()
     def _str_(self):
         return f"{self.user.username} - {self.hotel.name}"
     
