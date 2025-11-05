@@ -8,6 +8,9 @@ from tenancy.models import TenantBaseModal
 
 def generate_short_uuid():
     return shortuuid.uuid()[:10]
+
+def upload_to(instance,filename):
+    return f"hotels/profiles/{instance.id}/{filename}"
 class Hotel(models.Model):
     
     id=models.CharField(max_length=15,primary_key=True,default=generate_short_uuid,editable=False)
@@ -24,7 +27,7 @@ class Hotel(models.Model):
     city = models.CharField(max_length=150)
     phone_number = models.CharField(max_length=20,null=True,blank=True)
     description= models.TextField(blank=True,null=True)
-    hotel_profile=models.ImageField(upload_to='hotels/profiles/',blank=True,null=True)
+    hotel_profile=models.ImageField(upload_to=upload_to,blank=True,null=True)
     created_at = models.DateField(auto_now_add=True,null=True)
     def __str__(self):
         return self.name

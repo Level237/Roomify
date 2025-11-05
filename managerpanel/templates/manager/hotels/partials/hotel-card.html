@@ -66,6 +66,7 @@
                 </div>
             </div>
             
+            {% if hotel.is_active %}
             <div class="row g-3 mb-3">
                 <div class="col-4">
                     <div class="text-center">
@@ -88,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            
+            {%endif%}
             <!-- Switch to Hotel Button -->
             <div class="pt-3 border-top">
                 
