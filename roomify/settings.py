@@ -54,13 +54,13 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'hotel.middleware.SubdomainHotelMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'customerpanel.middleware.CustomerMiddleware',
     'core.middleware.NotAuthenticatedMiddleware',
     'managerpanel.middleware.ManagerMiddleware',
-    'tenancy.middleware.ActiveHotelMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [

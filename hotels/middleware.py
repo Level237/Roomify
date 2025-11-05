@@ -1,15 +1,14 @@
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.utils.deprecation import MiddlewareMixin
+from hotels.models import Hotel
 
-class ActivateHotelMiddleware:
-    def __init__(self,get_response) -> None:
-        self.get_response = get_response
+class SubdomainHotelMiddleware(MiddlewareMixin):
+    def process_request(self,request):
+        host=request.get_host().split(':')[0]
+        subdomain=host.split('.')[0]
         
-    def __call__(self, request):
-        if request.user.is_authenticated and request.user.role.name == "manager":
-            hotel_id = request.session.get('active_hotel_id')
-            if not hotel_id and request.path.startswith('/manager/'):
-                return redirect(reverse('manager:dashboard'))
-                
-        return self.get_response(request)
+        try:
+            request.hotel= Hotel.objects.get(subdomain=subdomain)
+            
+        except Hotel.DoesNotExist:
+            request.hotel=None
         

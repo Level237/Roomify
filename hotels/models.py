@@ -34,10 +34,9 @@ class Hotel(models.Model):
     
 class Hotelier(TenantBaseModal):
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="hotelier")
-    
+    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, null=True, blank=True, related_name='hotelier')
     hired_date =models.DateField(auto_now_add=True)
     
-    objects= TenantManager()
     def _str_(self):
         return f"{self.user.username} - {self.hotel.name}"
     
