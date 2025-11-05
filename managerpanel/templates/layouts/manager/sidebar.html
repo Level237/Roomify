@@ -26,21 +26,24 @@
                     </button>
                     <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown" style="position: absolute; z-index: 1070;">
                         {% if hotels_recents.count > 0 %}
-                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        <li><a class="dropdown-item" href="{% url "managerpanel:hotels_list" %}" data-hotel="all">Vue globale</a></li>
                         {% endif %}
                         {% if hotels_recents.count == 0 %}
                              <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
                              Nothing hotel
                         </a></li>
                         {% endif %}
+
+                        <form action="{% url 'managerpanel:switch_hotel' %}" method="post">
+                            {% csrf_token %}
                         {% for hotel in hotels_recents %}
-                        
+                        <input type="hidden" name="hotel_id" value="{{hotel.id}}">
                         <li><hr class="dropdown-divider"></li>
-                        <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
+                        <li><button type="submit" style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
                             <i class="bi bi-building me-2"></i> {{hotel.name}}
-                        </a></li>
+                        </button></li>
                         {% endfor %}
-                       
+                       </form>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item text-primary" href="{% url 'managerpanel:hotels_list' %}?r=new-hotel">

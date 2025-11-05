@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from roles.models import Role
 from rooms.models import Room
+from django.contrib import messages
 
 
 User = get_user_model()
@@ -22,8 +23,12 @@ def dashboard_manager(request):
     })
 
 def switch_hotel(request,hotel_id):
-    hotel= get_object_or_404(Hotel,id=hotel_id,manager=request.user)
-    request.session['active_hotel_id'] = hotel.id
+    
+    if request.method == "POST":
+        hotel_id=request.POST.get("hotel_id")
+        hotel= get_object_or_404(Hotel,id=hotel_id,manager=request.user)
+        request.session['active_hotel_id'] = hotel.id
+        messages.success(request,f"Hotel {hotel.name} Switched successfully")
     return redirect('manager:dashboard')
 
 
