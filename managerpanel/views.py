@@ -16,7 +16,10 @@ from rooms.models import Room
 User = get_user_model()
 def dashboard_manager(request):
 
-    return render(request,"manager/dashboard.html")
+    hotel_count=Hotel.objects.filter(manager=request.user).count()
+    return render(request,"manager/dashboard.html",{
+        'total_hotels':hotel_count
+    })
 
 def switch_hotel(request,hotel_id):
     hotel= get_object_or_404(Hotel,id=hotel_id,manager=request.user)

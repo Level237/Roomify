@@ -13,16 +13,17 @@
                     <p class="text-muted mb-0">Bienvenue sur votre tableau de bord</p>
                 </div>
                 <div>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                    <a href="{% url 'managerpanel:hotels_list' %}?r=new-hotel" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-2"></i>Ajouter un hôtel
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Stats Overview -->
-    <div class="row g-4 mb-4">
+   {% if total_hotels > 0 %}
+         <div class="row g-4 mb-4">
         <div class="col-md-6 col-xxl-3">
             <div class="card bg-primary bg-opacity-10 border-0 h-100">
                 <div class="card-body">
@@ -257,8 +258,367 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <!-- No Hotels - Onboarding Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <!-- Left Side - Illustration/Message -->
+                        <div class="col-lg-6 p-5 d-flex align-items-center">
+                            <div class="onboarding-content">
+                                <div class="mb-4">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
+                                        <i class="bi bi-rocket-takeoff me-2"></i>Commencez maintenant
+                                    </span>
+                                </div>
+                                
+                                <h2 class="display-7 fw-bold mb-3">
+                                    Aucun hôtel configuré
+                                </h2>
+                                
+                                <p class="text-muted fs-7 mb-4">
+                                    Pour accéder à vos statistiques et gérer vos réservations, 
+                                    vous devez d'abord ajouter votre premier hôtel.
+                                </p>
+                                
+                                <div class="d-flex gap-3 mb-4">
+                                    <a href="{% url 'managerpanel:hotels_list' %}?r=new-hotel" class="btn fs-6 btn-primary btn-lg px-4">
+                                        <i class="bi bi-plus-circle me-2"></i>Nouveau hôtel
+                                    </a>
+                                    <button class="btn btn-outline-secondary fs-6 btn-lg px-4" data-bs-toggle="modal" data-bs-target="#helpModal">
+                                        <i class="bi bi-question-circle me-2"></i>Besoin d'aide ?
+                                    </button>
+                                </div>
+                                
+                                <!-- Features List -->
+                                <div class="mt-5">
+                                    <h6 class="text-uppercase text-muted small mb-3">Ce que vous pourrez faire :</h6>
+                                    <div class="row g-3">
+                                        <div class="col-sm-6">
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-shrink-0">
+                                                    <div class="icon-shape icon-sm bg-success bg-opacity-10 text-success rounded-circle">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">Gérer les réservations</h6>
+                                                    <p class="text-muted small mb-0">Suivez toutes vos réservations en temps réel</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-shrink-0">
+                                                    <div class="icon-shape icon-sm bg-success bg-opacity-10 text-success rounded-circle">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">Statistiques détaillées</h6>
+                                                    <p class="text-muted small mb-0">Analysez vos performances</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-shrink-0">
+                                                    <div class="icon-shape icon-sm bg-success bg-opacity-10 text-success rounded-circle">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">Gestion des chambres</h6>
+                                                    <p class="text-muted small mb-0">Organisez vos chambres facilement</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-shrink-0">
+                                                    <div class="icon-shape icon-sm bg-success bg-opacity-10 text-success rounded-circle">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">Rapports financiers</h6>
+                                                    <p class="text-muted small mb-0">Suivez vos revenus et dépenses</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Side - Visual/Steps -->
+                        <div class="col-lg-6 bg-light p-5 d-flex align-items-center">
+                            <div class="w-100">
+                                <h5 class="mb-4">Démarrage en 3 étapes simples</h5>
+                                
+                                <!-- Step 1 -->
+                                <div class="d-flex mb-4 step-item">
+                                    <div class="flex-shrink-0">
+                                        <div class="step-number">
+                                            <span>1</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <h6 class="mb-2">Créez votre hôtel</h6>
+                                        <p class="text-muted small mb-0">
+                                            Renseignez les informations de base : nom, adresse, description et photos
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 2 -->
+                                <div class="d-flex mb-4 step-item">
+                                    <div class="flex-shrink-0">
+                                        <div class="step-number">
+                                            <span>2</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <h6 class="mb-2">Ajoutez votre personnel </h6>
+                                        <p class="text-muted small mb-0">
+                                            Configurez les types de chambres, tarifs et disponibilités
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 3 -->
+                                <div class="d-flex mb-4 step-item">
+                                    <div class="flex-shrink-0">
+                                        <div class="step-number">
+                                            <span>3</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <h6 class="mb-2">Commencez à recevoir des réservations</h6>
+                                        <p class="text-muted small mb-0">
+                                            Votre hôtel est prêt ! votre personnel est pret a gerer vos réservations depuis votre tableau de bord
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Stats Preview -->
+                                <div class="mt-5 p-4 card border-0 rounded-3 border">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-graph-up-arrow text-primary fs-4 me-2"></i>
+                                        <h6 class="mb-0">Aperçu de vos futures statistiques</h6>
+                                    </div>
+                                    <div class="row g-3 text-center">
+                                        <div class="col-4">
+                                            <div class="stat-preview">
+                                                <i class="bi bi-calendar-check text-muted"></i>
+                                                <div class="mt-2 text-muted small">Réservations</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="stat-preview">
+                                                <i class="bi bi-graph-up text-muted"></i>
+                                                <div class="mt-2 text-muted small">Occupation</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="stat-preview">
+                                                <i class="bi bi-currency-dollar text-muted"></i>
+                                                <div class="mt-2 text-muted small">Revenus</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   {% endif %}
 </div>
 
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Onboarding Section Styles */
+    .onboarding-content {
+        animation: fadeInLeft 0.6s ease-out;
+    }
+    
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Step Numbers */
+    .step-number {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--bs-primary), var(--bs-primary-border-subtle));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .step-item:hover .step-number {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 6px 20px rgba(var(--bs-primary-rgb), 0.4);
+    }
+    
+    .step-item {
+        transition: all 0.3s ease;
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .step-item:hover {
+        background: rgba(var(--bs-primary-rgb), 0.05);
+        transform: translateX(5px);
+    }
+    
+    /* Icon Shapes */
+    .icon-shape {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .icon-sm {
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+    }
+    
+    /* Stat Preview */
+    .stat-preview {
+        padding: 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-preview:hover {
+        background: var(--bs-light);
+        transform: translateY(-3px);
+    }
+    
+    .stat-preview i {
+        font-size: 2rem;
+        opacity: 0.5;
+    }
+    
+    /* Badge Animation */
+    .badge.bg-primary.bg-opacity-10 {
+        animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+    
+    /* Buttons */
+    .btn-lg {
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-lg:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-primary.btn-lg {
+        box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.3);
+    }
+    
+    .btn-primary.btn-lg:hover {
+        box-shadow: 0 6px 20px rgba(var(--bs-primary-rgb), 0.4);
+    }
+    
+    /* Right Side Animation */
+    .col-lg-6.bg-light {
+        animation: fadeInRight 0.6s ease-out;
+    }
+    
+    /* Dark Mode Support */
+    [data-bs-theme="dark"] .bg-light {
+        background-color: var(--bs-secondary-bg) !important;
+    }
+    
+    [data-bs-theme="dark"] .step-item:hover {
+        background: rgba(var(--bs-primary-rgb), 0.1);
+    }
+    
+    [data-bs-theme="dark"] .stat-preview:hover {
+        background: var(--bs-secondary-bg);
+    }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+        .onboarding-content,
+        .col-lg-6.bg-light {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .display-6 {
+            font-size: 1.75rem;
+        }
+        
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+        
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}
