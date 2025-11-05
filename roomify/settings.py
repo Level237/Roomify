@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'core',
     'roles',
     'rooms.apps.RoomsConfig',
     'customerpanel',
@@ -49,18 +47,55 @@ INSTALLED_APPS = [
     
 ]
 
+SHARED_APPS = (
+    'tenant_schemas',  # Obligatoire
+    'tenants',         # L'app qui définit les modèles de tenants
+
+    # Apps Django standard
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # Votre app "public"
+    'public',
+)
+
+TENANT_APPS = (
+    # Apps Django (sauf admin, déjà dans shared)
+    'django.contrib.contenttypes', # Requis par auth
+    
+    # Si vous décidez de mettre 'auth' par tenant (recommandé)
+    'django.contrib.auth', 
+    'django.contrib.sessions',
+    'django.contrib.messages',
+
+    # Votre app métier principale
+    'hotels',
+
+    # (Optionnel, mais recommandé) Une app 'users' pour votre AUTH_USER_MODEL
+    # 'users', 
+)
+
+INSTALLED_APPS = []
+INSTALLED_APPS += SHARED_APPS
+INSTALLED_APPS += TENANT_APPS
+
+
 MIDDLEWARE = [
+    'tenant_schemas.middleware.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'hotel.middleware.SubdomainHotelMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'customerpanel.middleware.CustomerMiddleware',
-    'core.middleware.NotAuthenticatedMiddleware',
     'managerpanel.middleware.ManagerMiddleware',
+    'tenancy.middleware.ActiveHotelMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -73,7 +108,7 @@ ROOT_URLCONF = 'roomify.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'core' / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,7 +129,7 @@ WSGI_APPLICATION = 'roomify.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': "roomify",
         'USER':"postgres",
         "PASSWORD":"levelvertos",
@@ -103,7 +138,12 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = (
+    'tenant_schemas.routers.TenantSyncRouter',
+)
 
+TENANT_MODEL = 'tenants.HotelTenant'
+TENANT_DOMAIN_MODEL = 'tenants.Domain'
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -145,16 +185,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = "/static/"
-
-STATICFILES_DIRS = [
-    BASE_DIR / "core/static"
-]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static_files"]
 
 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
 

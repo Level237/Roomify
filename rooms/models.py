@@ -1,18 +1,15 @@
 from django.db import models
-from tenancy.manager import TenantManager
-from tenancy.models import TenantBaseModal
+
 
 # Create your models here.
 
-class Room(TenantBaseModal):
+class Room(models.Model):
     room_number= models.CharField(max_length=50)
     room_type=models.CharField(max_length=100)
     price_per_night=models.DecimalField(max_digits=10, decimal_places=2)
     is_available=models.BooleanField(default=True)
     capacity= models.IntegerField(default=1)
     room_profile= models.ImageField(upload_to='rooms/profiles/',blank=True,null=False)
-    
-    objects= TenantManager()
     def __str_(self):
         return f"{self.hotel.name} - {self.room_number}"
     
