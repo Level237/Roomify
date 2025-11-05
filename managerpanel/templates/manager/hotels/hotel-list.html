@@ -203,6 +203,40 @@
         border-color: var(--bs-success);
     }
     
+    /* Switch Hotel Button Styles */
+    .switch-hotel-btn {
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border-width: 2px;
+    }
+    
+    .switch-hotel-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.2);
+    }
+    
+    .switch-hotel-btn:active {
+        transform: translateY(0);
+    }
+    
+    .switch-hotel-btn i {
+        transition: transform 0.3s ease;
+    }
+    
+    .switch-hotel-btn:hover i {
+        transform: rotate(180deg);
+    }
+    
+    .btn-success[disabled] {
+        opacity: 1;
+        cursor: not-allowed;
+    }
+    
+    .switch-hotel-form {
+        margin: 0;
+    }
+    
     /* Empty State Styles */
     .empty-state-container {
         padding: 3rem 1.5rem;
@@ -327,39 +361,37 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Gestion des switches pour activer/désactiver les hôtels
-    const hotelSwitches = document.querySelectorAll('[id^="hotelSwitch"]');
+    // Gestion du basculement vers un hôtel
+    const switchForms = document.querySelectorAll('.switch-hotel-form');
     
-    hotelSwitches.forEach(switchEl => {
-        switchEl.addEventListener('change', function() {
-            const hotelId = this.dataset.hotelId;
-            const isActive = this.checked;
-            const card = this.closest('.hotel-card');
-            const badge = card.querySelector('.badge');
-            const img = card.querySelector('.hotel-img');
+    switchForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const button = this.querySelector('.switch-hotel-btn');
+            const icon = button.querySelector('i');
+            const span = button.querySelector('span');
             
-            if (isActive) {
-                card.classList.remove('opacity-75');
-                badge.className = 'badge bg-success';
-                badge.innerHTML = '<i class="bi bi-check-circle me-1"></i>Actif';
-                img.style.filter = 'none';
-                
-                // Notification de succès
-                showToast('Hôtel activé avec succès', 'success');
-            } else {
-                card.classList.add('opacity-75');
-                badge.className = 'badge bg-secondary';
-                badge.innerHTML = '<i class="bi bi-pause-circle me-1"></i>Inactif';
-                img.style.filter = 'grayscale(50%)';
-                
-                // Notification
-                showToast('Hôtel désactivé', 'warning');
-            }
+            // Désactiver le bouton et afficher le chargement
+            button.disabled = true;
+            icon.className = 'bi bi-arrow-repeat spinner-animation';
+            span.textContent = 'Basculement en cours...';
             
-            // Ici vous pouvez ajouter une requête AJAX pour mettre à jour le statut côté serveur
-            console.log(`Hôtel ${hotelId} ${isActive ? 'activé' : 'désactivé'}`);
+            // Le formulaire sera soumis normalement (pas de e.preventDefault())
+            // La page se rechargera avec le nouvel hôtel actif
         });
     });
+    
+    // Animation de rotation pour l'icône de chargement
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spinner-animation {
+            animation: spin 1s linear infinite;
+        }
+    `;
+    document.head.appendChild(style);
     
     // Fonction pour afficher les toasts
     function showToast(message, type = 'info') {
@@ -389,6 +421,14 @@ document.addEventListener('DOMContentLoaded', function() {
         toastElement.addEventListener('hidden.bs.toast', function () {
             toastElement.remove();
         });
+    }
+    
+    // Afficher un message de succès si l'hôtel a été changé
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('switched') === 'success') {
+        showToast('Hôtel basculé avec succès !', 'success');
+        // Nettoyer l'URL
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
 </script>

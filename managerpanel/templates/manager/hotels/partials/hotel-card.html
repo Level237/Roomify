@@ -89,16 +89,21 @@
                 </div>
             </div>
             
-            {% if hotel.is_active %}
-            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                <span class="text-muted small">Statut</span>
-                <div class="form-check form-switch mb-0">
-                    <input class="form-check-input" type="checkbox" role="switch" 
-                           id="hotelSwitch1" checked data-hotel-id="1">
-                    <label class="form-check-label" for="hotelSwitch1"></label>
-                </div>
+            <!-- Switch to Hotel Button -->
+            <div class="pt-3 border-top">
+                
+               
+                {% if hotel.is_active %}
+                <!-- Switch to this Hotel -->
+                
+                    <button type="submit" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2 switch-hotel-btn">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <span>Basculer vers cet hôtel</span>
+                    </button>
+                    {%endif%}
+                </form>
+                
             </div>
-            {%endif%}
         </div>
     </div>
 </div>
