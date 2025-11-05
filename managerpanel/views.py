@@ -106,6 +106,8 @@ def hotels_list(request):
         'total_hotels_is_not_active':total_hotels_is_not_active,
         'total_rooms' : total_rooms
     })
+
+        
         
        
     

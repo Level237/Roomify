@@ -1,6 +1,5 @@
 from accounts.utils import account_activation_token
 from core.utils import get_base_url
-from django.shortcuts import render
 from .forms import EmployeeCreationForm
 from roles.models import Role
 from .models import Hotel,Hotelier
