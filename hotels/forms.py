@@ -34,6 +34,7 @@ class HotelStepOneAddress(forms.Form):
                               widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel country"}))
     
 class HotelStepOneFile(forms.Form):
-    hotel_profile = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={"class":"d-none","placeholder":"Enter Hotel description","id":"hotelLogo"}))
-    
+    hotel_profile = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={"class":"form-control","placeholder":"Enter Hotel description","id":"hotel_profile"}))
+    color=forms.CharField(max_length=7, required=True,
+                          widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter Hotel color",'type':'color','style':"height:50px"}))
 

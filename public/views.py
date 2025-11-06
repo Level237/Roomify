@@ -3,6 +3,7 @@ from django.views import View
 from hotels.forms import HotelStepOneAddress, HotelStepOneFile, HotelStepOneInformation
 from django.urls import reverse
 from django.shortcuts import redirect
+from django_countries.fields import CountryField
 # Create your views here.
 
 
@@ -27,8 +28,7 @@ def signup(request):
                     return redirect(f"{reverse('public:signup')}?s=2")
         elif not step:
             return redirect(f"{reverse('public:signup')}?s=1&i=infos")
-        print(step)
-        return render(request, 'public/auth/signup.html',{'form': form,"step":step})
+        return render(request, 'public/auth/signup.html',{'form': form,"step":step,"i":i,"country":CountryField().formfield().choices})
 
 def public_home_view(request):
     return render(request, 'public/Homepage.html')

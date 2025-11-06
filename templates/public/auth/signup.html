@@ -174,7 +174,7 @@
                             <form id="hotelForm" method="POST" class="mt-4" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <!-- Hotel Name -->
-                                 {% if step == "1" %}
+                                 {% if step == "1" and i == "infos" %}
                                         <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_name">Hotel Name <span class="text-danger">*</span></label>
                                     {{form.name}}
@@ -203,40 +203,43 @@
                                 
 
                                 <!-- Address -->
+                                 {% if step == "1" and i == "address" %}
                                 <div class="mb-3 mt-3">
                                     <label class="form-label fw-semibold" for="hotel_address">Address <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="hotel_address" name="address" placeholder="Street address" required>
+                                    {{form.address}}
                                 </div>
-
-                                <!-- City -->
-                                <div class="mb-3">
+                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_city">City <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="hotel_city" name="city" placeholder="City" required>
+                                    {{form.city}}
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_country">Country <span class="text-danger">*</span></label>
+                                    {{form.country}}
+                                </div>
+                                {%endif%}
+                                
+                               
 
                                 <!-- Description -->
                                 
                                 <!-- Hotel Profile Image -->
+                                 {% if step == "1" and i == "file" %}
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_profile">Hotel Profile Image</label>
                                     <div class="upload-container">
-                                        <input type="file" class="form-control" id="hotel_profile" name="hotel_profile" accept="image/*">
+                                        {{form.hotel_profile}}
                                         <div class="upload-preview mt-2 d-none">
                                             <img id="profile_preview" src="" class="img-thumbnail" style="max-height: 150px;">
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Hotel Logo -->
-                                <div class="mb-4">
-                                    <label class="form-label fw-semibold" for="hotel_logo">Hotel Logo</label>
-                                    <div class="upload-container">
-                                        <input type="file" class="form-control" id="hotel_logo" name="logo" accept="image/*">
-                                        <div class="upload-preview mt-2 d-none">
-                                            <img id="logo_preview" src="" class="img-thumbnail" style="max-height: 100px;">
-                                        </div>
-                                    </div>
+                                 <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_color">Branding Color for your hotel <span class="text-danger">*</span></label>
+                                    {{form.color}}
                                 </div>
+                                {%endif%}
+                                <!-- Hotel Logo -->
+                                
 
                                 <!-- Buttons -->
                                 <div class="d-grid gap-2">
