@@ -23,11 +23,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('core.urls')),
-    path('accounts/',include('accounts.urls')),
-    path('customer/',include('customerpanel.urls')),
-    path('manager/',include("managerpanel.urls")),
-    path('hotels/',include("hotels.urls"))
+    path("",include("public.urls"))
 ]
 
 if settings.DEBUG:

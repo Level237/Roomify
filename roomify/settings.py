@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+PUBLIC_SCHEMA_URLCONF = 'roomify.urls'
 
+ROOT_URLCONF = 'roomify.tenant_urls'
 
 # Application definition
 
@@ -89,8 +91,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'managerpanel.middleware.ManagerMiddleware',
-    'tenancy.middleware.ActiveHotelMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -110,7 +110,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'managerpanel.context_processors.get_recents_hotel_context',
             ],
         },
     },

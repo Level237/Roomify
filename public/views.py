@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
+
+
+
+def public_home_view(request):
+    return render(request, 'public/home.html')
