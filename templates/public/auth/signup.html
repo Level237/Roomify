@@ -171,24 +171,36 @@
                             </div>
 
                             <!-- Form START -->
-                            <form id="hotelForm" class="mt-4">
+                            <form id="hotelForm" method="POST" class="mt-4" enctype="multipart/form-data">
+                                {% csrf_token %}
                                 <!-- Hotel Name -->
-                                <div class="mb-3">
+                                 {% if step == "1" %}
+                                        <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_name">Hotel Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="hotel_name" name="name" placeholder="Enter your hotel name" required>
-                                </div>
+                                    {{form.name}}
+                                        </div>
 
-                                <!-- Row: Email & Phone -->
-                                <div class="row g-3">
+                                        <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold" for="hotel_email">Hotel Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control form-control-lg" id="hotel_email" name="email" placeholder="hotel@example.com" required>
+                                        {{form.email}}
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold" for="hotel_phone">Phone Number</label>
-                                        <input type="tel" class="form-control form-control-lg" id="hotel_phone" name="phone_number" placeholder="+1 234 567 8900">
+                                        {{form.phone_number}}
                                     </div>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_description">Description</label>
+                                    {{form.description}}
+                                </div>
+
+                                 {%endif%}
+                                
+
+                                <!-- Row: Email & Phone -->
+                                
 
                                 <!-- Address -->
                                 <div class="mb-3 mt-3">
@@ -203,11 +215,7 @@
                                 </div>
 
                                 <!-- Description -->
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold" for="hotel_description">Description</label>
-                                    <textarea class="form-control" id="hotel_description" name="description" rows="3" placeholder="Tell us about your hotel..."></textarea>
-                                </div>
-
+                                
                                 <!-- Hotel Profile Image -->
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_profile">Hotel Profile Image</label>

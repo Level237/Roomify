@@ -21,7 +21,7 @@ class HotelStepOneInformation(forms.Form):
     email=forms.CharField(max_length=50, required=True,
                           widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel email"}))
     phone_number =  PhoneNumberField(max_length=20, required=False,
-                                    widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel phone number"}, help_text="Format international requis (ex: +33 6 12 34 56 78)."))
+                                    widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel phone number"}))
     description = forms.CharField(required=False,
                                    widget=forms.Textarea(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel description","style":"height: 100px"}))
 
