@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-expand-xl">
 		<div class="container">
 			<!-- Logo START -->
-			<a class="navbar-brand" href="{% url 'core:home'%}">
+			<a class="navbar-brand" href="{% url 'public:home'%}">
 				<img class="light-mode-item navbar-brand-item" src="{% static "images/logo-light.png" %}" alt="logo">
 				<img class="dark-mode-item navbar-brand-item" src="{% static "images/logo.png" %}" alt="logo">
 			</a>
@@ -219,7 +219,7 @@
                         	{% include "ui/avatar.html" %}
                 {% else %}
                    <li class="nav-item">
-					<a href="{% url 'accounts:login' %}" class="btn btn-sm btn-primary mb-0"><i class="fa-solid fa-right-to-bracket me-sm-2"></i><span class="d-none d-sm-inline">Sign Up</span></a>
+					<a href="#" class="btn btn-sm btn-primary mb-0"><i class="fa-solid fa-right-to-bracket me-sm-2"></i><span class="d-none d-sm-inline">Sign Up</span></a>
 				</li>
                 {% endif %}
 				<!-- Sign In button -->
