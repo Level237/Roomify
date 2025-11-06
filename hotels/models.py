@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 import uuid
-
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -27,11 +28,12 @@ class Hotel(models.Model):
     
     email=models.EmailField(max_length=50,null=True)
     address = models.CharField(max_length=255)
+    country=CountryField(max_length=150,null=True,blank=True)
     city = models.CharField(max_length=150)
-    phone_number = models.CharField(max_length=20,null=True,blank=True)
+    phone_number = PhoneNumberField(null=True,blank=True,region=None,verbose_name="Numéro de Téléphone")
     description= models.TextField(blank=True,null=True)
     hotel_profile=models.ImageField(upload_to=upload_to,blank=True,null=True)
-    logo =models.ImageField(upload_to=upload_logo,blank=True,null=True)
+    color=models.CharField(max_length=7,default="#000000")
     created_at = models.DateField(auto_now_add=True,null=True)
     def __str__(self):
         return self.name
