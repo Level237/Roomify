@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = "accounts.CustomUser"
+
 
 # Application definition
 
@@ -38,17 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'roles',
     'rooms.apps.RoomsConfig',
-    'customerpanel',
     'accounts.apps.AccountsConfig',
     'hotels.apps.HotelsConfig',
-    'managerpanel'
     
 ]
 
 SHARED_APPS = (
-    'tenant_schemas',  # Obligatoire
+    'django_tenants',  # Obligatoire
     'tenants',         # L'app qui définit les modèles de tenants
 
     # Apps Django standard
@@ -65,12 +62,11 @@ SHARED_APPS = (
 
 TENANT_APPS = (
     # Apps Django (sauf admin, déjà dans shared)
-    'django.contrib.contenttypes', # Requis par auth
+
     
     # Si vous décidez de mettre 'auth' par tenant (recommandé)
-    'django.contrib.auth', 
-    'django.contrib.sessions',
-    'django.contrib.messages',
+
+
 
     # Votre app métier principale
     'hotels',
@@ -85,7 +81,7 @@ INSTALLED_APPS += TENANT_APPS
 
 
 MIDDLEWARE = [
-    'tenant_schemas.middleware.TenantMainMiddleware',
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,7 +89,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'customerpanel.middleware.CustomerMiddleware',
     'managerpanel.middleware.ManagerMiddleware',
     'tenancy.middleware.ActiveHotelMiddleware'
 ]
@@ -129,7 +124,7 @@ WSGI_APPLICATION = 'roomify.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'tenant_schemas.postgresql_backend',
+        'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': "roomify",
         'USER':"postgres",
         "PASSWORD":"levelvertos",
@@ -139,7 +134,7 @@ DATABASES = {
 }
 
 DATABASE_ROUTERS = (
-    'tenant_schemas.routers.TenantSyncRouter',
+    'django_tenants.routers.TenantSyncRouter',
 )
 
 TENANT_MODEL = 'tenants.HotelTenant'
