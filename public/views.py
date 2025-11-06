@@ -4,7 +4,7 @@ from django.views import View
 
 class  TenantSignupView(View):
     def get(self, request):
-        return render(request, 'public/tenant_signup.html')
+        return render(request, 'public/auth/signup.html')
 
 def public_home_view(request):
     return render(request, 'public/Homepage.html')

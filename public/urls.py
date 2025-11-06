@@ -6,5 +6,5 @@ app_name="public"
 urlpatterns = [
     path('', views.public_home_view, name='home'),
 
-    #path('signup/', views.TenantSignupView.as_view(), name='signup'),
+    path('signup/', views.TenantSignupView.as_view(), name='signup'),
 ]

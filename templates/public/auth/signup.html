@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign Up - Create Your Hotel Account</title>
+    
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+    
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/font-awesome/css/all.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}">
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    
+    <!-- Dark mode -->
+    <script>
+        const storedTheme = localStorage.getItem('theme');
+        
+        const getPreferredTheme = () => {
+            if (storedTheme) {
+                return storedTheme;
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        const setTheme = function (theme) {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        };
+
+        setTheme(getPreferredTheme());
+    </script>
+</head>
+
+<body>
+    <!-- Main Container - Full Screen -->
+    <div class="container-fluid p-0 vh-100">
+        <div class="row g-0 h-100">
+            <!-- Left Section - Image & Info -->
+            <div class="col-lg-6 d-flex align-items-center order-2 order-lg-1 bg-mode">
+                <div class="w-100 p-4 p-lg-5">
+                    <!-- Back to Home -->
+                    <div class="mb-4">
+                        <a href="{% url 'public:home' %}" class="btn btn-sm btn-white border">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Home
+                        </a>
+                    </div>
+                    
+                    <!-- Step Indicator -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="step-indicator {% if request.GET.step != '2' %}active{% endif %}">
+                                <div class="step-circle">1</div>
+                                <div class="step-label">Hotel Info</div>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step-indicator {% if request.GET.step == '2' %}active{% endif %}">
+                                <div class="step-circle">2</div>
+                                <div class="step-label">Your Account</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="text-center my-4">
+                        <img src="{% static 'images/element/signin.svg' %}" class="img-fluid" style="max-width: 350px;" alt="">
+                    </div>
+                    
+                    <!-- Info -->
+                    <div class="mt-4">
+                        <h2 class="mb-3 fw-bold">Join Roomify Today!</h2>
+                        <p class="mb-4 text-muted fs-6">Start managing your hotel bookings with our powerful platform.</p>
+                        
+                        <!-- Features List -->
+                        <div class="vstack gap-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-lg bg-success bg-opacity-10 text-success rounded-circle flex-shrink-0">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0">Easy Setup</h6>
+                                    <small class="text-muted">Get started in minutes</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-lg bg-primary bg-opacity-10 text-primary rounded-circle flex-shrink-0">
+                                    <i class="bi bi-graph-up"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0">Powerful Analytics</h6>
+                                    <small class="text-muted">Track your performance</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-lg bg-warning bg-opacity-10 text-warning rounded-circle flex-shrink-0">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0">Secure & Reliable</h6>
+                                    <small class="text-muted">Your data is safe with us</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom text -->
+                    <div class="mt-5 text-center text-lg-start">
+                        <p class="mb-0">Already have an account? <a href="#" class="text-primary fw-medium">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section - Form -->
+            <div class="col-lg-6 order-1 order-lg-2 bg-body position-relative">
+                <!-- Dark mode toggle -->
+                <div class="position-absolute top-0 end-0 m-3">
+                    <button class="btn btn-link text-warning p-0 mb-0" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-circle-half theme-icon-active fa-fw" viewbox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                            <use href="#"></use>
+                        </svg>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end min-w-auto" aria-labelledby="bd-theme">
+                        <li class="mb-1">
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+                                <svg width="16" height="16" fill="currentColor" class="bi bi-brightness-high-fill fa-fw mode-switch me-1" viewbox="0 0 16 16">
+                                    <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                                    <use href="#"></use>
+                                </svg>Light
+                            </button>
+                        </li>
+                        <li class="mb-1">
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars-fill fa-fw mode-switch me-1" viewbox="0 0 16 16">
+                                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
+                                    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+                                    <use href="#"></use>
+                                </svg>Dark
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half fa-fw mode-switch me-1" viewbox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                                    <use href="#"></use>
+                                </svg>Auto
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="h-100 overflow-auto">
+                    <div class="p-4 p-lg-5 p-xl-6">
+                        
+                        <!-- Step 1: Hotel Information -->
+                        <div id="step1" class="step-content {% if request.GET.step == '2' %}d-none{% endif %}">
+                            <!-- Title -->
+                            <div class="mb-4">
+                                <h1 class="mb-2 h2 fw-bold">Create Your Hotel</h1>
+                                <p class="mb-0 text-muted">Tell us about your hotel to get started</p>
+                            </div>
+
+                            <!-- Form START -->
+                            <form id="hotelForm" class="mt-4">
+                                <!-- Hotel Name -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_name">Hotel Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg" id="hotel_name" name="name" placeholder="Enter your hotel name" required>
+                                </div>
+
+                                <!-- Row: Email & Phone -->
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" for="hotel_email">Hotel Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control form-control-lg" id="hotel_email" name="email" placeholder="hotel@example.com" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" for="hotel_phone">Phone Number</label>
+                                        <input type="tel" class="form-control form-control-lg" id="hotel_phone" name="phone_number" placeholder="+1 234 567 8900">
+                                    </div>
+                                </div>
+
+                                <!-- Address -->
+                                <div class="mb-3 mt-3">
+                                    <label class="form-label fw-semibold" for="hotel_address">Address <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg" id="hotel_address" name="address" placeholder="Street address" required>
+                                </div>
+
+                                <!-- City -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_city">City <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg" id="hotel_city" name="city" placeholder="City" required>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_description">Description</label>
+                                    <textarea class="form-control" id="hotel_description" name="description" rows="3" placeholder="Tell us about your hotel..."></textarea>
+                                </div>
+
+                                <!-- Hotel Profile Image -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="hotel_profile">Hotel Profile Image</label>
+                                    <div class="upload-container">
+                                        <input type="file" class="form-control" id="hotel_profile" name="hotel_profile" accept="image/*">
+                                        <div class="upload-preview mt-2 d-none">
+                                            <img id="profile_preview" src="" class="img-thumbnail" style="max-height: 150px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hotel Logo -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold" for="hotel_logo">Hotel Logo</label>
+                                    <div class="upload-container">
+                                        <input type="file" class="form-control" id="hotel_logo" name="logo" accept="image/*">
+                                        <div class="upload-preview mt-2 d-none">
+                                            <img id="logo_preview" src="" class="img-thumbnail" style="max-height: 100px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary btn-lg mb-0" onclick="nextStep()">
+                                        Continue <i class="bi bi-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Form END -->
+                        </div>
+
+                        <!-- Step 2: Personal Information -->
+                        <div id="step2" class="step-content {% if request.GET.step != '2' %}d-none{% endif %}">
+                            <!-- Title -->
+                            <div class="mb-4">
+                                <h1 class="mb-2 h2 fw-bold">Create Your Account</h1>
+                                <p class="mb-0 text-muted">Almost there! Set up your personal account</p>
+                            </div>
+
+                            <!-- Form START -->
+                            <form id="accountForm" class="mt-4">
+                                <!-- Username -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="username">Username <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="user_email">Your Email <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                        <input type="email" class="form-control" id="user_email" name="user_email" placeholder="your@email.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="password">Password <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">
+                                            <i class="bi bi-eye" id="password-toggle"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">Minimum 8 characters</small>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password" required>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password')">
+                                            <i class="bi bi-eye" id="confirm_password-toggle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Terms & Conditions -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="#" class="text-primary">Terms & Conditions</a>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg mb-0">
+                                        <i class="bi bi-check-circle me-2"></i> Create Account
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-lg mb-0" onclick="previousStep()">
+                                        <i class="bi bi-arrow-left me-2"></i> Back
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Form END -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Custom Styles -->
+<style>
+    /* Step Indicator Styles */
+    .step-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        flex: 1;
+    }
+
+    .step-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--bs-gray-300);
+        color: var(--bs-gray-600);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    .step-indicator.active .step-circle {
+        background: linear-gradient(135deg, var(--bs-primary), #0066ff);
+        color: white;
+        box-shadow: 0 4px 15px rgba(var(--bs-primary-rgb), 0.4);
+        transform: scale(1.05);
+    }
+
+    .step-label {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--bs-gray-600);
+        text-align: center;
+    }
+
+    .step-indicator.active .step-label {
+        color: var(--bs-primary);
+        font-weight: 600;
+    }
+
+    .step-line {
+        width: 80px;
+        height: 3px;
+        background: var(--bs-gray-300);
+        margin: 0 10px;
+        position: relative;
+        top: -18px;
+    }
+
+    /* Upload Preview */
+    .upload-container {
+        position: relative;
+    }
+
+    .upload-preview {
+        margin-top: 10px;
+    }
+
+    /* Form Animations */
+    .step-content {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Form Control Modern */
+    .form-control:focus {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.15);
+    }
+
+    /* Input Group */
+    .input-group-text {
+        background-color: var(--bs-light);
+        border-right: 0;
+    }
+
+    .input-group .form-control {
+        border-left: 0;
+    }
+
+    .input-group .form-control:focus {
+        border-left: 0;
+    }
+
+    .input-group:focus-within .input-group-text {
+        border-color: var(--bs-primary);
+        color: var(--bs-primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+        .step-line {
+            width: 50px;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
+
+<!-- Custom Scripts -->
+<script>
+    // Toggle password visibility
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const icon = document.getElementById(fieldId + '-toggle');
+        
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
+
+    // Image preview for hotel profile
+    document.getElementById('hotel_profile')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile_preview').src = e.target.result;
+                document.querySelector('#hotel_profile').closest('.upload-container').querySelector('.upload-preview').classList.remove('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Image preview for hotel logo
+    document.getElementById('hotel_logo')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('logo_preview').src = e.target.result;
+                document.querySelector('#hotel_logo').closest('.upload-container').querySelector('.upload-preview').classList.remove('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Navigate to next step
+    function nextStep() {
+        const form = document.getElementById('hotelForm');
+        
+        if (form.checkValidity()) {
+            // Store form data in sessionStorage
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            sessionStorage.setItem('hotelData', JSON.stringify(data));
+            
+            // Navigate to step 2
+            window.location.href = '{% url "public:signup" %}?step=2';
+        } else {
+            form.reportValidity();
+        }
+    }
+
+    // Navigate to previous step
+    function previousStep() {
+        window.location.href = '{% url "public:signup" %}?step=1';
+    }
+
+    // Handle account form submission
+    document.getElementById('accountForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+        
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long!');
+            return;
+        }
+        
+        // Get hotel data from sessionStorage
+        const hotelData = JSON.parse(sessionStorage.getItem('hotelData') || '{}');
+        
+        // Combine all data
+        const formData = new FormData(this);
+        const accountData = {};
+        formData.forEach((value, key) => {
+            accountData[key] = value;
+        });
+        
+        const completeData = {
+            ...hotelData,
+            ...accountData
+        };
+        
+        console.log('Complete Registration Data:', completeData);
+        
+        // TODO: Submit to backend
+        // fetch('/api/signup/', {
+        //     method: 'POST',
+        //     body: JSON.stringify(completeData),
+        //     headers: { 'Content-Type': 'application/json' }
+        // })
+        
+        alert('Registration complete! (Backend integration needed)');
+    });
+
+    // Restore hotel data on step 2
+    if (window.location.search.includes('step=2')) {
+        const hotelData = JSON.parse(sessionStorage.getItem('hotelData') || '{}');
+        console.log('Restored hotel data:', hotelData);
+    }
+</script>
+
+<!-- Bootstrap JS -->
+<script src="{% static "vendor/bootstrap/dist/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Theme mode switch -->
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const getStoredTheme = () => localStorage.getItem('theme');
+        const setStoredTheme = theme => localStorage.setItem('theme', theme);
+
+        const getPreferredTheme = () => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme) {
+                return storedTheme;
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        const setTheme = theme => {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        };
+
+        setTheme(getPreferredTheme());
+
+        const showActiveTheme = (theme, focus = false) => {
+            const themeSwitcher = document.querySelector('#bd-theme');
+            if (!themeSwitcher) {
+                return;
+            }
+
+            const themeSwitcherText = document.querySelector('#bd-theme-text');
+            const activeThemeIcon = document.querySelector('.theme-icon-active use');
+            const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+            const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href');
+
+            document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                element.classList.remove('active');
+                element.setAttribute('aria-pressed', 'false');
+            });
+
+            btnToActive.classList.add('active');
+            btnToActive.setAttribute('aria-pressed', 'true');
+            activeThemeIcon.setAttribute('href', svgOfActiveBtn);
+            const themeSwitcherLabel = `${themeSwitcherText ? themeSwitcherText.textContent : ''} (${btnToActive.dataset.bsThemeValue})`;
+            themeSwitcher.setAttribute('aria-label', themeSwitcherLabel);
+
+            if (focus) {
+                themeSwitcher.focus();
+            }
+        };
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme());
+            }
+        });
+
+        showActiveTheme(getPreferredTheme());
+
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value');
+                setStoredTheme(theme);
+                setTheme(theme);
+                showActiveTheme(theme, true);
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
