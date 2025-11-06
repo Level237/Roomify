@@ -20,7 +20,6 @@ class Hotel(models.Model):
     owner = models.OneToOneField(settings.AUTH_USER_MODEL,
                               to_field="id",
                              on_delete=models.CASCADE, related_name='owned_hotel')
-    subdomain=models.CharField(max_length=50,unique=True)
     
     is_active=models.BooleanField(default=False)
     
@@ -39,7 +38,6 @@ class Hotel(models.Model):
     
 class Hotelier(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="hotelier")
-    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, null=True, blank=True, related_name='hotelier')
     hired_date =models.DateField(auto_now_add=True)
     
     def _str_(self):

@@ -63,14 +63,7 @@ SHARED_APPS = (
 )
 
 TENANT_APPS = (
-    # Apps Django (sauf admin, déjà dans shared)
-
     
-    # Si vous décidez de mettre 'auth' par tenant (recommandé)
-
-
-
-    # Votre app métier principale
     'hotels',
 
     # (Optionnel, mais recommandé) Une app 'users' pour votre AUTH_USER_MODEL
@@ -180,7 +173,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static_files"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 
