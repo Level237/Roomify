@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 
 def public_home_view(request):
-    return render(request, 'public/home.html')
+    return render(request, 'public/Homepage.html')
