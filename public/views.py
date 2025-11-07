@@ -4,7 +4,10 @@ from hotels.forms import EmployeeCreationForm, HotelStepOneAddress, HotelStepOne
 from django.urls import reverse
 from django.shortcuts import redirect
 from django_countries.fields import CountryField
+from public.utils import get_country_from_ip
 # Create your views here.
+
+
 
 
 def signup(request):
@@ -17,7 +20,8 @@ def signup(request):
                     request.session['hotel_step_one_infos']=form.cleaned_data
                     return redirect(f"{reverse('public:signup')}?s=1&i=address")
             elif i=="address":
-                form=HotelStepOneAddress(request.POST or None)
+                country=get_country_from_ip(request)
+                form=HotelStepOneAddress(initial={"country":country})
                 if request.method=="POST" and form.is_valid():
                     request.session['hotel_step_one_address']=form.cleaned_data
                     return redirect(f"{reverse('public:signup')}?s=1&i=file")

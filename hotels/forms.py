@@ -1,4 +1,5 @@
 from django import forms
+from hotels.models import Hotel
 from phonenumber_field.formfields import PhoneNumberField # NOUVEL IMPORT
 from django_countries.fields import CountryField   
 
@@ -25,14 +26,17 @@ class HotelStepOneInformation(forms.Form):
     description = forms.CharField(required=False,
                                    widget=forms.Textarea(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel description","style":"height: 100px"}))
 
-class HotelStepOneAddress(forms.Form):
+class HotelStepOneAddress(forms.ModelForm):
     address = forms.CharField(max_length=255, required=True,
                               widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel address"}))
     city = forms.CharField(max_length=150, required=True,
                            widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel city"}))
     country = CountryField().formfield(max_length=150, required=True,
                               widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel country"}))
-    
+    class Meta:
+        model=Hotel
+        fields=["address","city","country"]
+        
 class HotelStepOneFile(forms.Form):
     hotel_profile = forms.ImageField(required=True, widget=forms.ClearableFileInput(attrs={"class":"form-control","placeholder":"Enter Hotel description","id":"hotel_profile"}))
     color=forms.CharField(max_length=7, required=True,

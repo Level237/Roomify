@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -59,10 +60,11 @@ SHARED_APPS = (
     'django.contrib.staticfiles',
     'django_countries',
     'phonenumber_field',
-    # Votre app "public"
+    'cities_light',
     'public',
 )
 
+GEOIP_PATH=os.path.join(BASE_DIR,'geoip')
 TENANT_APPS = (
     
     'hotels',

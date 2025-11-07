@@ -3,7 +3,7 @@ from django.conf import settings
 import uuid
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
-
+from cities_light.models import City
 # Create your models here.
 
 
@@ -28,9 +28,9 @@ class Hotel(models.Model):
     
     email=models.EmailField(max_length=50,null=True)
     address = models.CharField(max_length=255)
-    country=CountryField(max_length=150,null=True,blank=True)
-    city = models.CharField(max_length=150)
-    phone_number = PhoneNumberField(null=True,blank=True,region=None,verbose_name="Numéro de Téléphone")
+    country = CountryField(blank_label='(Choose a country)')
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=True)
+    phone_number = PhoneNumberField(null=True,blank=True,region=None,verbose_name="Phone Number")
     description= models.TextField(blank=True,null=True)
     hotel_profile=models.ImageField(upload_to=upload_to,blank=True,null=True)
     color=models.CharField(max_length=7,default="#000000")
