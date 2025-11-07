@@ -1,0 +1,126 @@
+
+{% load static %}
+<nav class="navbar sidebar navbar-expand-xl navbar-light">
+    <!-- Navbar brand for xl START -->
+    <div class="d-flex align-items-center px-3 py-2">
+        <a class="navbar-brand" href="{% url "core:home" %}">
+            <img class="light-mode-item navbar-brand-item" src="{% static 'images/logo-light.png' %}" alt="logo" height="40">
+             <img class="dark-mode-item navbar-brand-item" src="{% static 'images/logo.png' %}" alt="logo" height="40">
+        </a>
+    </div>
+
+    <div class="offcanvas offcanvas-start flex-row custom-scrollbar h-100" data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
+        <div class="offcanvas-body sidebar-content d-flex flex-column">
+            <!-- Hotel Selector -->
+            <div class="p-3 border-bottom">
+                <div class="dropdown" style="position: relative;">
+                    <button class="btn btn-outline-primary w-100 text-start d-flex align-items-center justify-content-between" 
+                            type="button" id="hotelDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="z-index: 1060;">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-building me-2"></i>
+                            <span style="font-size: 13px;" class="text-truncate" id="currentHotel">Sélectionner un hôtel</span>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="hotelDropdown" style="position: absolute; z-index: 1070;">
+                        
+                        
+                        {% if hotels_recents.count == 0 %}
+                             <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
+                             Nothing hotel
+                        </a></li>
+                        {% endif %}
+                        {% for hotel in hotels_recents %}
+                        <li><a class="dropdown-item" href="#" data-hotel="all">Vue globale</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a style="font-size: 15px;" class="dropdown-item d-flex align-items-center" href="#" data-hotel="2">
+                            <i class="bi bi-building me-2"></i> {{hotel.name}}
+                        </a></li>
+                        {% endfor %}
+                       
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="{% url 'managerpanel:hotels_list' %}?r=new-hotel">
+                                <i class="bi bi-plus-circle me-2"></i>Ajouter un hôtel
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <ul class="navbar-nav flex-column flex-grow-1" id="navbar-sidebar">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url "managerpanel:manager_dashboard" %}">
+                        <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+                    </a>
+                </li>
+                
+                <li class="nav-item mt-2">
+                    <div class="nav-link text-uppercase small fw-bold text-muted">Gestion</div>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'managerpanel:hotels_list' %}">
+                        <i class="bi bi-door-open me-2"></i> Hotels
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-calendar-check me-2"></i> Réservations
+                        <span class="badge bg-primary rounded-pill float-end">12</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-people me-2"></i> Clients
+                    </a>
+                </li>
+                
+               
+                
+                <li class="nav-item mt-2">
+                    <div class="nav-link text-uppercase small fw-bold text-muted">Analyse</div>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-graph-up me-2"></i> Statistiques
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-currency-dollar me-2"></i> Revenus
+                    </a>
+                </li>
+                
+                <li class="nav-item mt-auto">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-gear me-2"></i> Paramètres
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile & Logout -->
+        <div class="p-3 border-top">
+            <div class="d-flex align-items-center">
+                <img src="{% static 'images/avatar/01.jpg' %}" class="rounded-circle me-2" width="36" height="36" alt="Avatar">
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">{{ user.get_full_name|default:user.username }}</h6>
+                    <small class="text-muted">Manager</small>
+                </div>
+                <a href="{% url 'accounts:logout' %}" class="btn btn-sm btn-link text-danger" data-bs-toggle="tooltip" title="Déconnexion">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% if show_hotel_form %}
+<!-- Overlay avec backdrop -->
+{% include 'ui/modal-hotel.html'  %}
+{% endif %}

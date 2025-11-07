@@ -1,0 +1,352 @@
+{% extends 'hotels/layouts/dashboard/main.html' %}
+{% load static %}
+{% block title %}Tableau de bord - Manager{% endblock %}
+
+{% block content %}
+<div class="page-content-wrapper p-xxl-4">
+    <!-- Header with welcome message -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-1">Bonjour, {{ user.first_name|default:user.username }}!</h1>
+                    <p class="text-muted mb-0">Bienvenue sur votre tableau de bord</p>
+                </div>
+                <div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                        <i class="bi bi-plus-lg me-2"></i>Ajouter un hôtel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-xxl-3">
+            <div class="card bg-primary bg-opacity-10 border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase text-primary mb-2">Hôtels</h6>
+                            <h2 class="mb-0">3</h2>
+                            <span class="text-success small">+1 ce mois</span>
+                        </div>
+                        <div class="icon-lg rounded-circle bg-primary bg-opacity-25 text-primary">
+                            <i class="bi bi-building"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xxl-3">
+            <div class="card bg-success bg-opacity-10 border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase text-success mb-2">Réservations</h6>
+                            <h2 class="mb-0">124</h2>
+                            <span class="text-success small">+12% ce mois</span>
+                        </div>
+                        <div class="icon-lg rounded-circle bg-success bg-opacity-25 text-success">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xxl-3">
+            <div class="card bg-warning bg-opacity-10 border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase text-warning mb-2">Taux d'occupation</h6>
+                            <h2 class="mb-0">78%</h2>
+                            <span class="text-success small">+5% ce mois</span>
+                        </div>
+                        <div class="icon-lg rounded-circle bg-warning bg-opacity-25 text-warning">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xxl-3">
+            <div class="card bg-info bg-opacity-10 border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-uppercase text-info mb-2">Revenus</h6>
+                            <h2 class="mb-0">100 000 Fcfa</h2>
+                            <span class="text-success small">+8% ce mois</span>
+                        </div>
+                        <div class="icon-lg rounded-circle bg-info bg-opacity-25 text-info">
+                            <i class="bi bi-currency-euro"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Recent Activity -->
+    <div class="row g-4 mb-4">
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+            <div class="card border-0 h-100">
+                <div class="card-header bg-transparent border-0 p-4 pb-0">
+                    <h5 class="mb-0">Actions rapides</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary text-start">
+                            <i class="bi bi-plus-circle me-2"></i>Nouvelle réservation
+                        </button>
+                        <button class="btn btn-outline-primary text-start">
+                            <i class="bi bi-people me-2"></i>Ajouter un client
+                        </button>
+                        <button class="btn btn-outline-primary text-start">
+                            <i class="bi bi-file-earmark-text me-2"></i>Générer un rapport
+                        </button>
+                        <button class="btn btn-outline-primary text-start" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                            <i class="bi bi-building-add me-2"></i>Ajouter un hôtel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="col-lg-8">
+            <div class="card border-0 h-100">
+                <div class="card-header bg-transparent border-0 p-4 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Activité récente</h5>
+                        <a href="#" class="btn btn-sm btn-light">Voir tout</a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="timeline-2">
+                        <!-- Timeline item -->
+                        <div class="timeline-item">
+                            <div class="timeline-mark"></div>
+                            <div class="ms-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1">Nouvelle réservation</h6>
+                                    <small class="text-muted">Il y a 2 min</small>
+                                </div>
+                                <p class="mb-0 small">Chambre Deluxe réservée par Jean Dupont pour 2 nuits</p>
+                            </div>
+                        </div>
+                        <!-- Timeline item -->
+                        <div class="timeline-item">
+                            <div class="timeline-mark bg-warning"></div>
+                            <div class="ms-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1">Avis client</h6>
+                                    <small class="text-muted">Il y a 1h</small>
+                                </div>
+                                <p class="mb-0 small">Nouvel avis 5 étoiles pour l'Hôtel des Palmiers</p>
+                            </div>
+                        </div>
+                        <!-- Timeline item -->
+                        <div class="timeline-item">
+                            <div class="timeline-mark bg-info"></div>
+                            <div class="ms-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1">Paiement reçu</h6>
+                                    <small class="text-muted">Il y a 3h</small>
+                                </div>
+                                <p class="mb-0 small">Paiement de 450€ reçu pour la réservation #4587</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotels List -->
+    <div class="card border-0">
+        <div class="card-header bg-transparent border-0 p-4 pb-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Mes hôtels</h5>
+                <a href="#" class="btn btn-sm btn-light">Tout voir</a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-4">
+                <!-- Hotel Item -->
+                <div class="col-md-6 col-xxl-4">
+                    <div class="card border h-100">
+                        <div class="position-relative">
+                            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Hôtel des Palmiers">
+                            <span class="badge bg-success position-absolute top-0 end-0 m-3">Actif</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="mb-1">Hôtel des Palmiers</h5>
+                                    <p class="text-muted mb-2"><i class="bi bi-geo-alt me-2"></i>Paris, France</p>
+                                </div>
+                                <div class="dropdown
+                                    <button class="btn btn-sm btn-light rounded-circle" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Modifier</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Paramètres</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Supprimer</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h4 class="mb-0">24</h4>
+                                    <small class="text-muted">Chambres</small>
+                                </div>
+                                <div class="text-end">
+                                    <h4 class="mb-0">85%</h4>
+                                    <small class="text-muted">Occupation</small>
+                                </div>
+                                <div class="text-end">
+                                    <h4 class="mb-0">4.8</h4>
+                                    <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> Avis</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 pt-0">
+                            <a href="#" class="btn btn-outline-primary w-100">Gérer l'hôtel</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add New Hotel Card -->
+                <div class="col-md-6 col-xxl-4">
+                    <div class="card border-2 border-dashed h-100 d-flex align-items-center justify-content-center" style="min-height: 300px;">
+                        <div class="text-center p-4">
+                            <div class="icon-xl bg-light rounded-circle text-primary mb-3 mx-auto">
+                                <i class="bi bi-plus-lg"></i>
+                            </div>
+                            <h5>Ajouter un nouvel hôtel</h5>
+                            <p class="text-muted small mb-0">Gérez plusieurs hôtels depuis un seul tableau de bord</p>
+                            <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                                <i class="bi bi-plus-lg me-2"></i>Ajouter un hôtel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Charts -->
+    <div class="row g-4 mt-4">
+        <div class="col-12">
+            <div class="card border-0">
+                <div class="card-header bg-transparent border-0 p-4 pb-0">
+                    <h5 class="mb-0">Performance des hôtels</h5>
+                </div>
+                <div class="card-body">
+                    <div id="hotelPerformanceChart" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialisation des tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+    
+    // Script pour gérer le changement d'hôtel
+    document.querySelectorAll('[data-hotel]').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const hotelId = this.getAttribute('data-hotel');
+            const hotelName = this.textContent.trim();
+            
+            // Mettre à jour l'affichage de l'hôtel sélectionné
+            document.getElementById('currentHotel').textContent = hotelName;
+            
+            // Ici, vous pourriez ajouter une requête AJAX pour charger les données de l'hôtel sélectionné
+            console.log('Hôtel sélectionné:', hotelId);
+            
+            // Mettre à jour le badge "Actif"
+            document.querySelectorAll('[data-hotel]').forEach(el => {
+                const badge = el.querySelector('.badge');
+                if (badge) badge.remove();
+            });
+            
+            if (hotelId !== 'all') {
+                const activeBadge = document.createElement('span');
+                activeBadge.className = 'badge bg-primary ms-auto';
+                activeBadge.textContent = 'Actif';
+                this.appendChild(activeBadge);
+            }
+        });
+    });
+    
+    // Initialisation du graphique (exemple avec Chart.js)
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('hotelPerformanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+                datasets: [{
+                    label: 'Hôtel des Palmiers',
+                    data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 70, 75, 80],
+                    borderColor: '#0d6efd',
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(13, 110, 253, 0.05)'
+                }, {
+                    label: 'Hôtel du Lac',
+                    data: [28, 48, 40, 19, 86, 27, 90, 65, 70, 80, 75, 85],
+                    borderColor: '#fd7e14',
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(253, 126, 20, 0.05)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
+				
+
+   
