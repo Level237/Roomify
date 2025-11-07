@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'accounts.apps.AccountsConfig',
     'hotels.apps.HotelsConfig',
-    
 ]
 
 SHARED_APPS = (
@@ -58,9 +57,7 @@ SHARED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_countries',
     'phonenumber_field',
-    'cities_light',
     'public',
 )
 
