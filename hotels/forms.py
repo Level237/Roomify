@@ -3,10 +3,10 @@ from phonenumber_field.formfields import PhoneNumberField # NOUVEL IMPORT
 from django_countries.fields import CountryField   
 
 class EmployeeCreationForm(forms.Form):
-    username = forms.CharField(max_length=50)
-    email = forms.CharField(max_length=255)
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=50,widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter username"}))
+    email = forms.CharField(max_length=255,widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter password"}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter confirm password"}))
     
     def clean(self):
         cleaned_data = super().clean()

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from hotels.forms import HotelStepOneAddress, HotelStepOneFile, HotelStepOneInformation
+from hotels.forms import EmployeeCreationForm, HotelStepOneAddress, HotelStepOneFile, HotelStepOneInformation
 from django.urls import reverse
 from django.shortcuts import redirect
 from django_countries.fields import CountryField
@@ -26,6 +26,10 @@ def signup(request):
                 if request.method=="POST" and form.is_valid():
                     request.session['hotel_step_one_file']=form.cleaned_data
                     return redirect(f"{reverse('public:signup')}?s=2")
+        elif step == "2":
+            form=EmployeeCreationForm(request.POST or None)
+            if request.method=="POST" and form.is_valid():
+                return redirect(f"{reverse('public:signup')}?s=3")
         elif not step:
             return redirect(f"{reverse('public:signup')}?s=1&i=infos")
         return render(request, 'public/auth/signup.html',{'form': form,"step":step,"i":i,"country":CountryField().formfield().choices})
