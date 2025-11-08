@@ -143,13 +143,18 @@
                             </div>
 
                             <!-- Form START -->
-                            <form id="hotelForm" method="POST" class="mt-4" enctype="multipart/form-data">
+                            <form id="hotelForm"  method="POST" class="mt-4" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <!-- Hotel Name -->
                                  {% if step == "1" and i == "infos" %}
                                         <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_name">Hotel Name <span class="text-danger">*</span></label>
                                     {{form.name}}
+                                    {%if form.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ form.errors.name.0 }}
+                                        </div>
+                                    {% endif %}
                                         </div>
 
                                         <div class="row g-3">
@@ -160,12 +165,23 @@
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold" for="hotel_phone">Phone Number</label>
                                         {{form.phone_number}}
+                                        {%if form.phone_number.errors %}
+                                        <div class="text-danger">
+                                            {{ form.phone_number.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
+                                    
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_description">Description</label>
                                     {{form.description}}
+                                        {%if form.description.errors %}
+                                        <div class="text-danger">
+                                            {{ form.description.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                 </div>
 
                                  {%endif%}
@@ -179,14 +195,29 @@
                                 <div class="mb-3 mt-3">
                                     <label class="form-label fw-semibold" for="hotel_address">Address <span class="text-danger">*</span></label>
                                     {{form.address}}
+                                        {%if form.address.errors %}
+                                        <div class="text-danger">
+                                            {{ form.address.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                                  <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_city">City <span class="text-danger">*</span></label>
                                     {{form.city}}
+                                        {%if form.city.errors %}
+                                        <div class="text-danger">
+                                            {{ form.city.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_country">Country <span class="text-danger">*</span></label>
                                     {{form.country}}
+                                        {%if form.country.errors %}
+                                        <div class="text-danger">
+                                            {{ form.country.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 {%endif%}
                                 
@@ -203,11 +234,21 @@
                                         <div class="upload-preview mt-2 d-none">
                                             <img id="profile_preview" src="" class="img-thumbnail" style="max-height: 150px;">
                                         </div>
+                                        {%if form.hotel_profile.errors %}
+                                        <div class="text-danger">
+                                            {{ form.hotel_profile.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
                                 </div>
                                  <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_color">Branding Color for your hotel <span class="text-danger">*</span></label>
                                     {{form.color}}
+                                        {%if form.color.errors %}
+                                        <div class="text-danger">
+                                            {{ form.color.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 {%endif%}
                                 <!-- Hotel Logo -->
@@ -218,11 +259,21 @@
                                        <label class="form-label fw-semibold" for="hotel_logo">Username</label>
                                     <div class="upload-container">
                                         {{form.username}}
+                                        {%if form.username.errors %}
+                                        <div class="text-danger">
+                                            {{ form.username.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold" for="hotel_phone">Email</label>
                                         {{form.email}}
+                                        {%if form.email.errors %}
+                                        <div class="text-danger">
+                                            {{ form.email.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
                                 </div>
                               
@@ -232,12 +283,22 @@
                                     <label class="form-label fw-semibold" for="hotel_logo">Password</label>
                                     <div class="upload-container">
                                         {{form.password}}
+                                        {%if form.password.errors %}
+                                        <div class="text-danger">
+                                            {{ form.password.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold" for="hotel_logo">Confirm Password</label>
                                     <div class="upload-container">
                                         {{form.confirm_password}}
+                                        {%if form.confirm_password.errors %}
+                                        <div class="text-danger">
+                                            {{ form.confirm_password.errors.0 }}
+                                        </div>
+                                    {% endif %}
                                     </div>
                                 </div>
                                 {%endif%}

@@ -1,5 +1,4 @@
 from django import forms
-from phonenumber_field.formfields import PhoneNumberField # NOUVEL IMPORT
 
 class EmployeeCreationForm(forms.Form):
     username = forms.CharField(max_length=50,widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter username"}))
@@ -19,7 +18,7 @@ class HotelStepOneInformation(forms.Form):
                           widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel name"}))
     email=forms.CharField(max_length=50, required=True,
                           widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel email"}))
-    phone_number =  PhoneNumberField(max_length=20, required=False,
+    phone_number = forms.CharField(max_length=20, required=False,
                                     widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel phone number"}))
     description = forms.CharField(required=False,
                                    widget=forms.Textarea(attrs={"class":"form-control form-control-modern","placeholder":"Enter Hotel description","style":"height: 100px"}))

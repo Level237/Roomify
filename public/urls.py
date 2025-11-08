@@ -6,4 +6,5 @@ app_name="public"
 urlpatterns = [
     path('', views.public_home_view, name='home'),
     path('signup/', views.signup, name='signup'),
+    path('store_hotel/', views.store_hotel, name='store_hotel'),
 ]
