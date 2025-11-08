@@ -26,15 +26,18 @@ SECRET_KEY = 'django-insecure-oez$3ag$aq_=bb8^sw^^rpyv%=1nt7u=e3r8(kgd*+-ygt#(t@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+LOGIN_URL = '/login/' 
 PUBLIC_SCHEMA_URLCONF = 'roomify.urls'
 
 ROOT_URLCONF = 'roomify.tenant_urls'
-
+DEFAULT_HOST = 'www'
+ROOT_HOSTCONF = 'roomify.hosts'  
 # Application definition
 
 INSTALLED_APPS = [
+    'django_hosts',  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,6 +79,7 @@ INSTALLED_APPS += TENANT_APPS
 
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,6 +88,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware', 
 ]
 
 AUTHENTICATION_BACKENDS = [

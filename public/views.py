@@ -5,7 +5,8 @@ from django.shortcuts import redirect
 from hotels.models import Hotel
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django_tenants.utils import schema_context
+from django.contrib.auth import login
+from django_tenants.utils import schema_context,get_tenant_model,connection
 from tenants.models import Domain, HotelTenant
 import uuid
 from django.core.files.storage import default_storage
@@ -77,7 +78,7 @@ def store_hotel(request):
         
         tenant=HotelTenant.objects.create(
             name=infos['name'],
-            schema_name=infos['name'].lower().replace(" ","_")
+            schema_name=infos['name'].lower().replace(" ","-")
         )
         
         domain=Domain.objects.create(
@@ -85,6 +86,9 @@ def store_hotel(request):
             tenant=tenant,
             is_primary=True
         )
+        
+        connection.set_tenant(tenant)
+        
         
         with schema_context(tenant.schema_name):
             hotel=Hotel.objects.create(
@@ -100,6 +104,10 @@ def store_hotel(request):
                 hotel_profile=file_path,
                 color=file['color'],
             )
+            
+            login(request, user)
+            
+            
             with default_storage.open(file_path,'rb') as f:
                 hotel.hotel_profile.save(file_path.split('/')[-1],File(f))
                 
