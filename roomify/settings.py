@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rooms.apps.RoomsConfig',
-    'accounts.apps.AccountsConfig',
     'hotels.apps.HotelsConfig',
 ]
 
@@ -91,8 +90,7 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware', 
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'accounts.backend.EmailBackend',   # ton backend personnalisé
+AUTHENTICATION_BACKENDS = [   # ton backend personnalisé
     'django.contrib.auth.backends.ModelBackend',  # garde celui-ci pour compatibilité admin
 ]
 

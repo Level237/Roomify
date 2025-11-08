@@ -3,5 +3,6 @@ from . import views
 
 app_name="hotels"
 urlpatterns = [
-    path("dashboard/",views.dashboard,name="dashboard")
+    path("dashboard/",views.dashboard,name="dashboard"),
+    path("login/",views.tenant_login,name="login"),
 ]

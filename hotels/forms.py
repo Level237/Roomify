@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 class EmployeeCreationForm(forms.Form):
     username = forms.CharField(max_length=50,widget=forms.TextInput(attrs={"class":"form-control form-control-modern","placeholder":"Enter username"}))
@@ -37,3 +38,19 @@ class HotelStepOneFile(forms.Form):
     color=forms.CharField(max_length=7, required=True,
                           widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter Hotel color",'type':'color','style':"height:50px"}))
 
+class TenantLoginForm(AuthenticationForm):
+    username=forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Enter a username'
+        })
+    )
+    
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={
+            'class':"form-control",
+            'placeholder':"Enter a password"
+        })
+    )

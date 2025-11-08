@@ -3,7 +3,7 @@
 <nav class="navbar sidebar navbar-expand-xl navbar-light">
     <!-- Navbar brand for xl START -->
     <div class="d-flex align-items-center px-3 py-2">
-        <a class="navbar-brand" href="{% url "core:home" %}">
+        <a class="navbar-brand" href="">
             <img class="light-mode-item navbar-brand-item" src="{% static 'images/logo-light.png' %}" alt="logo" height="40">
              <img class="dark-mode-item navbar-brand-item" src="{% static 'images/logo.png' %}" alt="logo" height="40">
         </a>
@@ -41,7 +41,7 @@
                        
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item text-primary" href="{% url 'managerpanel:hotels_list' %}?r=new-hotel">
+                            <a class="dropdown-item text-primary" href="">
                                 <i class="bi bi-plus-circle me-2"></i>Ajouter un hôtel
                             </a>
                         </li>
@@ -52,7 +52,7 @@
             <!-- Navigation Menu -->
             <ul class="navbar-nav flex-column flex-grow-1" id="navbar-sidebar">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url "managerpanel:manager_dashboard" %}">
+                    <a class="nav-link active" href="">
                         <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -61,7 +61,7 @@
                     <div class="nav-link text-uppercase small fw-bold text-muted">Gestion</div>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'managerpanel:hotels_list' %}">
+                    <a class="nav-link" href="">
                         <i class="bi bi-door-open me-2"></i> Hotels
                     </a>
                 </li>
@@ -112,8 +112,8 @@
                     <h6 class="mb-0">{{ user.get_full_name|default:user.username }}</h6>
                     <small class="text-muted">Manager</small>
                 </div>
-                <a href="{% url 'accounts:logout' %}" class="btn btn-sm btn-link text-danger" data-bs-toggle="tooltip" title="Déconnexion">
-                    <i class="bi bi-box-arrow-right"></i>
+                    <a href="" class="btn btn-sm btn-link text-danger" data-bs-toggle="tooltip" title="Déconnexion">
+                        <i class="bi bi-box-arrow-right"></i>
                 </a>
             </div>
         </div>
