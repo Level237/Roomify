@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
-
+from decimal import Decimal
 # Create your models here.
 
 
@@ -42,6 +42,31 @@ class Hotelier(models.Model):
     
     def _str_(self):
         return f"{self.user.username} - {self.hotel.name}"
+    
+
+def upload_to(instance,filename):
+    return f"hotels/{instance.hotel.id}/rooms/{filename}"
+
+def upload_to_galery(instance,filename):
+    return f"hotels/{instance.room.hotel.id}/rooms/{instance.room.id}/galery/{filename}" 
+class Room(models.Model):
+    hotel=models.ForeignKey(Hotel,on_delete=models.CASCADE,related_name="rooms")
+    room_number= models.CharField(max_length=50)
+    room_type=models.CharField(max_length=100)
+    price_per_night=models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    is_available=models.BooleanField(default=True)
+    capacity= models.PositiveIntegerField(default=1)
+    room_profile= models.ImageField(upload_to=upload_to,blank=True,null=False)
+    def __str__(self):
+        return f"{self.hotel.name} - {self.room_number}"
+    
+
+class RoomImage(models.Model):
+    room=models.ForeignKey(Room,on_delete=models.CASCADE,related_name="galery_images")
+    image=models.ImageField(upload_to=upload_to,blank=True,null=True)
+    
+    def __str__(self):
+        return f"galery image for {self.room}"
     
 
     
