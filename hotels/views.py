@@ -1,10 +1,11 @@
 
-import re
+
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from hotels.models import Hotel
+from hotels.models import Hotel, Room
 from django.contrib.auth import authenticate, login
 from .forms import TenantLoginForm
+
 # Create your views here.
 
 
@@ -39,5 +40,13 @@ def dashboard(request):
         "hotel":hotel,
         "tenant_schema":request.tenant.schema_name,
     }
+    
+    
     return render(request, 'hotels/dashboard.html',context)
 
+
+@login_required
+
+def room_list(request):
+    rooms=Room.objects.all()
+    return render(request,'hotels/rooms/room-list.html',{'rooms':rooms})
