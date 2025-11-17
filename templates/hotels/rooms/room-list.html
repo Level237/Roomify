@@ -10,14 +10,14 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
                     <h1 class="h3 mb-1">Mes Chambres</h1>
-                    <p class="text-muted mb-0">Gérez tous vos établissements en un seul endroit</p>
+                    <p class="text-muted mb-0">Gérez toutes vos chambres en un seul endroit</p>
                 </div>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-secondary">
                         <i class="bi bi-funnel me-2"></i>Filtrer
                     </button>
                     <a href="?r=new-hotel" class="btn btn-primary">
-                        <i class="bi bi-plus-lg me-2"></i>Ajouter un hôtel
+                        <i class="bi bi-plus-lg me-2"></i>Ajouter une chambre
                     </a>
                 </div>
             </div>
@@ -28,7 +28,7 @@
     <!-- Stats Overview -->
    
 
-    {% if hotels.count == 0 %}
+    {% if rooms.count == 0 %}
     <!-- Empty State -->
     <div class="row">
         <div class="col-12">
@@ -44,15 +44,15 @@
                         </div>
                         
                         <!-- Title & Description -->
-                        <h3 class="mb-3">Aucun hôtel trouvé</h3>
+                        <h3 class="mb-3">Aucune chambre trouvé</h3>
                         <p class="text-muted mb-4 mx-auto" style="max-width: 500px;">
-                            Vous n'avez pas encore ajouté d'hôtel à votre compte. 
-                            Commencez dès maintenant en créant votre premier établissement.
+                            Vous n'avez pas encore ajouté de chambre à votre compte. 
+                            Commencez dès maintenant en créant votre première chambre.
                         </p>
                         
                         <!-- CTA Button -->
-                        <a href="?r=new-hotel" class="btn btn-primary btn-lg px-4 py-3">
-                            <i class="bi bi-plus-circle me-2"></i>Créer mon premier hôtel
+                        <a href="?r=new-room" class="btn btn-primary btn-lg px-4 py-3">
+                            <i class="bi bi-plus-circle me-2"></i>Créer mon premier chambre
                         </a>
                         
                         <!-- Additional Info -->
@@ -85,10 +85,10 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="icon-shape icon-lg bg-primary bg-opacity-10 text-primary rounded-3 me-3">
-                            <i class="bi bi-building fs-5"></i>
+                            <i class="bi bi-door-open fs-5"></i>
                         </div>
                         <div>
-                            <h6 class="text-uppercase text-muted mb-1 small">Total Hôtels</h6>
+                            <h6 class="text-uppercase text-muted mb-1 small">Total Chambres</h6>
                             <h3 class="mb-0">5</h3>
                         </div>
                     </div>

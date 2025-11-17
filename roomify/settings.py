@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rooms.apps.RoomsConfig',
-    'hotels.apps.HotelsConfig',
+    'rooms',
+    'hotels',
 ]
 
 SHARED_APPS = (
