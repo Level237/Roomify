@@ -53,6 +53,8 @@ class Room(models.Model):
     room_id=models.CharField(primary_key=True,max_length=50,editable=False,unique=True),
     hotel=models.ForeignKey(Hotel,on_delete=models.CASCADE,related_name="rooms")
     room_number= models.CharField(max_length=50)
+    size_m2=models.PositiveIntegerField(default=0)
+    beds=models.PositiveIntegerField(default=1)
     room_type=models.CharField(max_length=100)
     description=models.TextField(blank=True,null=True),
     room_type = models.CharField(max_length=100, choices=[

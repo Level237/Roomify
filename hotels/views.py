@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from hotels.models import Hotel, Room
 from django.contrib.auth import authenticate, login
-from .forms import TenantLoginForm
+from .forms import TenantLoginForm,CreateRoomForm
 
 # Create your views here.
 
@@ -49,5 +49,6 @@ def dashboard(request):
 
 def room_list(request):
     show_modal=request.GET.get('r') == 'new-room'
+    room_form=CreateRoomForm()
     rooms=Room.objects.all()
-    return render(request,'hotels/rooms/room-list.html',{'rooms':rooms,'show_modal':show_modal})
+    return render(request,'hotels/rooms/room-list.html',{'rooms':rooms,'show_modal':show_modal,'room_form':room_form})
