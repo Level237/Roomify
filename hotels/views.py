@@ -48,5 +48,6 @@ def dashboard(request):
 @login_required
 
 def room_list(request):
+    show_modal=request.GET.get('r') == 'new-room'
     rooms=Room.objects.all()
-    return render(request,'hotels/rooms/room-list.html',{'rooms':rooms})
+    return render(request,'hotels/rooms/room-list.html',{'rooms':rooms,'show_modal':show_modal})

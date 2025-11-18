@@ -4,7 +4,10 @@
 
 {% block content %}
 <div class="page-content-wrapper p-xxl-4">
-    <!-- Header -->
+    
+    {%if show_modal%}
+        {%include 'hotels/rooms/ui/rooms-modal.html' %}
+    {%endif%}
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -16,7 +19,7 @@
                     <button class="btn btn-outline-secondary">
                         <i class="bi bi-funnel me-2"></i>Filtrer
                     </button>
-                    <a href="?r=new-hotel" class="btn btn-primary">
+                    <a href="?r=new-room" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-2"></i>Ajouter une chambre
                     </a>
                 </div>
@@ -52,7 +55,7 @@
                         
                         <!-- CTA Button -->
                         <a href="?r=new-room" class="btn btn-primary btn-lg px-4 py-3">
-                            <i class="bi bi-plus-circle me-2"></i>Créer mon premier chambre
+                            <i class="bi bi-plus-circle me-2"></i>Créer ma première chambre
                         </a>
                         
                         <!-- Additional Info -->
