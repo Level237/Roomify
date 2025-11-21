@@ -40,8 +40,6 @@
                 <form  class="needs-validation" action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="custom-modal-body">
-                      
-                        {{room_form}}
                         <div class="row g-4">
                             <!-- Section Informations de base -->
                             <div class="col-lg-8">
@@ -53,18 +51,100 @@
                                         <h6 class="mb-0 fw-semibold">Informations générales</h6>
                                     </div>
                                     <div class="section-body">
-                                        <div class="row g-3">
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.room_number}}
+                                                    <label for="{{ room_form.room_number.id_for_label }}">
+                                                        <i class="bi bi-hash me-2 text-primary"></i>Numéro de chambre <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.room_number.errors %}
+                                                        <div class="text-danger small">{{ room_form.room_number.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.room_type}}
+                                                    <label for="{{ room_form.room_type.id_for_label }}">
+                                                        <i class="bi bi-tag me-2 text-primary"></i>Type de chambre <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.room_type.errors %}
+                                                        <div class="text-danger small">{{ room_form.room_type.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.price_per_night}}
+                                                    <label for="{{ room_form.price_per_night.id_for_label }}">
+                                                        <i class="bi bi-currency-dollar me-2 text-primary"></i>Prix par nuit <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.price_per_night.errors %}
+                                                        <div class="text-danger small">{{ room_form.price_per_night.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.size_m2}}
+                                                    <label for="{{ room_form.size_m2.id_for_label }}">
+                                                        <i class="bi bi-arrows-fullscreen me-2 text-primary"></i>Taille (m²) <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.size_m2.errors %}
+                                                        <div class="text-danger small">{{ room_form.size_m2.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.beds}}
+                                                    <label for="{{ room_form.beds.id_for_label }}">
+                                                        <i class="bi bi-layout-sidebar me-2 text-primary"></i>Lits <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.beds.errors %}
+                                                        <div class="text-danger small">{{ room_form.beds.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    {{room_form.capacity}}
+                                                    <label for="{{ room_form.capacity.id_for_label }}">
+                                                        <i class="bi bi-people me-2 text-primary"></i>Capacité <span class="text-danger">*</span>
+                                                    </label>
+                                                    {% if room_form.capacity.errors %}
+                                                        <div class="text-danger small">{{ room_form.capacity.errors.0 }}</div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row mb-3">
                                             <div class="col-12">
                                                 <div class="form-floating">
-                                                    {{form.name}}
-                                                     {% if form.name.errors %}
-                                                        <div class="text-danger small">{{ form.name.errors.0 }}</div>
-                                                    {% endif %}
-                                                    <label for="hotelName">
-                                                        <i class="bi bi-building me-2 text-primary"></i>Nom de l'hôtel <span class="text-danger">*</span>
+                                                    {{room_form.description}}
+                                                    <label for="{{ room_form.description.id_for_label }}">
+                                                        <i class="bi bi-card-text me-2 text-primary"></i>Description
                                                     </label>
-                                                
+                                                    {% if room_form.description.errors %}
+                                                        <div class="text-danger small">{{ room_form.description.errors.0 }}</div>
+                                                    {% endif %}
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    {{room_form.is_available}}
+                                                    <label class="form-check-label" for="{{ room_form.is_available.id_for_label }}">
+                                                        Disponible immédiatement
+                                                    </label>
+                                                </div>
+                                                {% if room_form.is_available.errors %}
+                                                    <div class="text-danger small">{{ room_form.is_available.errors.0 }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -79,32 +159,45 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="text-center mb-4">
-                                            <div class="position-relative d-inline-block">
-                                                <img id="hotelLogoPreview" src="https://via.placeholder.com/200x150?text=Logo" 
-                                                     class="img-thumbnail rounded-3 mb-2" 
-                                                     style="width: 200px; height: 150px; object-fit: cover;">
-                                                <label for="hotelLogo" class="position-absolute bottom-0 end-0 bg-primary text-white" 
-                                                       style="cursor: pointer;" title="Changer le logo">
-                                                    <button id="hotelLogoButton" type="button" class="btn btn-primary btn-sm">
-                                                       Change profile <i class="bi bi-camera"></i>
-                                                       {{form.hotel_profile}}
+                                            <label class="form-label fw-semibold mb-2">Photo principale</label>
+                                            <div class="position-relative d-inline-block w-100">
+                                                <img id="roomProfilePreview" src="https://via.placeholder.com/400x300?text=Aperçu" 
+                                                     class="img-thumbnail rounded-3 mb-2 w-100" 
+                                                     style="height: 200px; object-fit: cover;">
+                                                <div class="mt-2">
+                                                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="document.getElementById('room_profile').click()">
+                                                        <i class="bi bi-camera me-2"></i>Choisir une photo
                                                     </button>
-                                                    
-                                                    {% if form.hotel_profile.errors %}
-                                                        <div class="text-danger small">{{ form.hotel_profile.errors.0 }}</div>
-                                                    {% endif %}
-                                                    
-                                                </label>
+                                                    <div class="d-none">
+                                                        {{room_form.room_profile}}
+                                                    </div>
+                                                </div>
+                                                {% if room_form.room_profile.errors %}
+                                                    <div class="text-danger small mt-1">{{ room_form.room_profile.errors.0 }}</div>
+                                                {% endif %}
                                             </div>
-                                            <div class="small text-muted">Format recommandé : 400x300px</div>
                                         </div>
 
-                                        
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold mb-2">Galerie photos</label>
+                                            <div class="upload-area p-3 border rounded text-center bg-light">
+                                                <i class="bi bi-cloud-upload fs-3 text-muted"></i>
+                                                <p class="small text-muted mb-2">Ajouter des photos supplémentaires</p>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('id_images').click()">
+                                                    Parcourir
+                                                </button>
+                                                <div class="d-none">
+                                                    {{room_form.images}}
+                                                </div>
+                                                {% if room_form.images.errors %}
+                                                    <div class="text-danger small mt-1">{{ room_form.images.errors.0 }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div id="imagesPreview" class="d-flex flex-wrap gap-2 mt-2"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                     
@@ -713,24 +806,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('addHotelForm');
     const loader = document.getElementById('hotelFormLoader');
     const successMessage = document.getElementById('successMessage');
-    const hotelLogoInput = document.getElementById('hotelLogo');
-    const hotelLogoPreview = document.getElementById('hotelLogoPreview');
-    const hotelLogoButton = document.getElementById('hotelLogoButton');
-    // Empêcher le scroll du body quand le modal est ouvert
-    document.body.style.overflow = 'hidden';
+    const roomProfileInput = document.getElementById('room_profile');
+    const roomProfilePreview = document.getElementById('roomProfilePreview');
+    const imagesInput = document.getElementById('id_images');
+    const imagesPreview = document.getElementById('imagesPreview');
 
-    hotelLogoButton.addEventListener('click', function() {
-        hotelLogoInput.click();
-    });
-    // Gestion de l'aperçu du logo
-    if (hotelLogoInput) {
-        hotelLogoInput.addEventListener('change', function(e) {
+    // Gestion de l'aperçu de la photo principale
+    if (roomProfileInput) {
+        roomProfileInput.addEventListener('change', function(e) {
             if (this.files && this.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    hotelLogoPreview.src = e.target.result;
+                    roomProfilePreview.src = e.target.result;
                 }
                 reader.readAsDataURL(this.files[0]);
+            }
+        });
+    }
+
+    // Gestion de l'aperçu de la galerie
+    if (imagesInput) {
+        imagesInput.addEventListener('change', function(e) {
+            imagesPreview.innerHTML = ''; // Clear existing previews
+            if (this.files) {
+                Array.from(this.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = 'position-relative';
+                        imgContainer.style.width = '60px';
+                        imgContainer.style.height = '60px';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail w-100 h-100';
+                        img.style.objectFit = 'cover';
+                        
+                        imgContainer.appendChild(img);
+                        imagesPreview.appendChild(imgContainer);
+                    }
+                    reader.readAsDataURL(file);
+                });
             }
         });
     }
