@@ -86,3 +86,17 @@ class ForgotPasswordForm(forms.Form):
     
     email=forms.EmailField(required=True,
                            widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your email"}))
+    
+    
+    
+class ResetPasswordForm(forms.Form):
+    
+    password=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Enter new password"}))
+    confirm_password=forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Enter confirm password"}))
+    
+    def clean(self):
+        cleaned=super().clean()
+        
+        if cleaned.get('password') != cleaned.get("confirm_password"):
+            raise forms.ValidationError("Passwords do not match")
+        return cleaned

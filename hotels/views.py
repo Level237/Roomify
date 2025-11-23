@@ -119,4 +119,28 @@ def forgot_password(request):
             
             return redirect('hotels:forgot-password')
     return render(request,"hotels/auth/forgot-password.html",{'form':form})
+
+
+def reset_password(request,uidb64,token):
+    try:
+        uuid=force_str(urlsafe_base64_decode(uidb64))
+        user=User.objects.get(pk=uuid)
+    
+    except:
+        messages.error(request,"Invalid link")
+        return redirect('hotels:forgot-password')
+    if not token_generator.check_token(user,token):
+        messages.error(request,"This reset link is invalid or expired")
+        return redirect('hotels:forgot-password')
+    form = ResetPasswordForm()
+    
+    if request.method == "POST":
+        form=ResetPasswordForm(request.POST)
+        
+        if form.is_valid():
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            messages.success(request, "Your password has been reset. You can now log in.")
+            return redirect('hotels:login')
+    return render(request,"hotels/auth/reset-password.html",{'form':form})
     

@@ -7,4 +7,5 @@ urlpatterns = [
     path("login/",views.tenant_login,name="login"),
     path("manage/rooms/",views.room_list,name="manage-rooms"),
     path("forgot-password/",views.forgot_password,name="forgot-password"),
+    path("reset/<uidb64>/<token>/",views.reset_password,name="reset-password"),
 ]
