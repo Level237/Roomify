@@ -84,3 +84,9 @@ def room_list(request):
                 return redirect('hotels:manage-rooms')
         
     return render(request,'hotels/rooms/room-list.html',{'rooms':rooms,'show_modal':show_modal,'room_form':room_form})
+
+
+def forgot_password(request):
+    form=ForgotPassword()
+    return render(request,"hotels/auth/forgot-password.html",{'form':form})
+    
