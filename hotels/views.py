@@ -4,14 +4,16 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from hotels.models import Hotel, Room
 from django.contrib.auth import authenticate, login
-from .forms import TenantLoginForm,CreateRoomForm,ForgotPasswordForm
+from .forms import TenantLoginForm,CreateRoomForm,ForgotPasswordForm,ResetPasswordForm
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import send_mail
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib import messages
 # Create your views here.
 
-
+token_generator = PasswordResetTokenGenerator()
 def tenant_login(request):
     
     if request.user.is_authenticated:
@@ -100,7 +102,7 @@ def forgot_password(request):
                 user=User.objects.get(email=email)
             except User.DoesNotExist:
                 messages.error(request,"This email does not exist")
-                return redirect('hotels:forgot-password')
+                return redirect('hotels:forgot-password forgot-password')
             uuid=urlsafe_base64_encode(force_bytes(user.pk))
             token=token_generator.make_token(user)
             
