@@ -82,7 +82,7 @@ class CreateRoomForm(forms.Form):
     images = forms.FileField(required=False, widget=MultipleFileInput(attrs={"class":"form-control","placeholder":"Enter room description","id":"id_images","multiple":True, "accept": "image/*",}))
 
 
-class ForgotPassword(forms.Form):
+class ForgotPasswordForm(forms.Form):
     
     email=forms.EmailField(required=True,
                            widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your email"}))

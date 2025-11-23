@@ -87,9 +87,12 @@ Main Content START -->
                                         <!-- Confirmation -->
                                         
 									<!-- Remember me -->
-									<div class="mb-3">
-										<input type="checkbox" class="form-check-input" id="rememberCheck">
-										<label class="form-check-label" for="rememberCheck">Keep me signed in</label>
+									<div class="mb-3 d-sm-flex justify-content-between">
+										<div>
+											<input type="checkbox" class="form-check-input" id="rememberCheck">
+											<label class="form-check-label" for="rememberCheck">Keep me signed in</label>
+										</div>
+										<a href="{% url 'hotels:forgot-password' %}">Forgot password?</a>
 									</div>
 									<!-- Button -->
 									<div><button type="submit" class="btn btn-primary w-100 mb-0">Sign up</button></div>

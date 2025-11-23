@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from hotels.models import Hotel, Room
 from django.contrib.auth import authenticate, login
-from .forms import TenantLoginForm,CreateRoomForm
+from .forms import TenantLoginForm,CreateRoomForm,ForgotPasswordForm
 
 # Create your views here.
 
@@ -87,6 +87,6 @@ def room_list(request):
 
 
 def forgot_password(request):
-    form=ForgotPassword()
+    form=ForgotPasswordForm()
     return render(request,"hotels/auth/forgot-password.html",{'form':form})
     
