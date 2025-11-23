@@ -5,7 +5,10 @@ from django.contrib.auth.decorators import login_required
 from hotels.models import Hotel, Room
 from django.contrib.auth import authenticate, login
 from .forms import TenantLoginForm,CreateRoomForm,ForgotPasswordForm
-
+from django.contrib.auth.models import User
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -88,5 +91,32 @@ def room_list(request):
 
 def forgot_password(request):
     form=ForgotPasswordForm()
+    
+    if request.method == 'POST':
+        form=ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email=form.cleaned_data['email']
+            try:
+                user=User.objects.get(email=email)
+            except User.DoesNotExist:
+                messages.error(request,"This email does not exist")
+                return redirect('hotels:forgot-password')
+            uuid=urlsafe_base64_encode(force_bytes(user.pk))
+            token=token_generator.make_token(user)
+            
+            reset_link=request.build_absolute_uri(
+                f"/reset/{uuid}/{token}/"
+            )
+            
+            send_mail(
+                subject="Reset your password",
+                message=f"Click the link to reset your password:\n\n{reset_link}",
+                from_email="Roomify <roomify@roomify.com>",
+                recipient_list=[email],
+            )
+            
+            messages.success(request, "A password reset link has been sent to your email.")
+            
+            return redirect('hotels:forgot-password')
     return render(request,"hotels/auth/forgot-password.html",{'form':form})
     
