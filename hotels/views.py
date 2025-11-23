@@ -10,6 +10,7 @@ from .forms import TenantLoginForm,CreateRoomForm
 
 
 def tenant_login(request):
+    
     if request.user.is_authenticated:
         return redirect('hotels:dashboard')
     
@@ -51,4 +52,35 @@ def room_list(request):
     show_modal=request.GET.get('r') == 'new-room'
     room_form=CreateRoomForm()
     rooms=Room.objects.all()
+    
+    if request.method == "POST":
+        room_form=CreateRoomForm(request.POST,request.FILES)
+        
+        if room_form.is_valid():
+            
+            with transaction.atomic():
+                
+                room=Room.objects.create(
+                    hotel=request.user.hotel,
+                    room_number=room_form.cleaned_data['room_number'],
+                    size_m2=room_form.cleaned_data['size_m2'],
+                    beds=room_form.cleaned_data['beds'],
+                    room_type=room_form.cleaned_data['room_type'],
+                    description=room_form.cleaned_data['description'],
+                    price_per_night=room_form.cleaned_data['price_per_night'],
+                    is_available=room_form.cleaned_data['is_available'],
+                    capacity=room_form.cleaned_data['capacity'],
+                    room_profile=room_form.cleaned_data['room_profile']
+                )
+                
+                images=request.FILES.getlist('images')
+                
+                for image in images:
+                    RoomImage.objects.create(
+                        room=room,
+                        image=image
+                    )
+                
+                return redirect('hotels:manage-rooms')
+        
     return render(request,'hotels/rooms/room-list.html',{'rooms':rooms,'show_modal':show_modal,'room_form':room_form})

@@ -79,6 +79,9 @@ Main Content START -->
                                         <div class="mb-3 position-relative">
                                             <label class="form-label">Mot de passe</label>
                                             {{ form.password }}
+											{% if form.password.errors %}
+                                            <div class="text-danger small">{{ form.password.errors.0 }}</div>
+                                            {% endif %}
                                         </div>
 
                                         <!-- Confirmation -->
